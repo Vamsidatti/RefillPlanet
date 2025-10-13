@@ -62,6 +62,20 @@ app.use(express.static(path.join(__dirname, '../public')));
 let transporter;
 
 function createEmailTransporter() {
+    // Custom SMTP configuration for @therefillplanet.com domain
+    if (process.env.SMTP_HOST) {
+        return nodemailer.createTransport({
+            host: process.env.SMTP_HOST,
+            port: process.env.SMTP_PORT || 587,
+            secure: process.env.SMTP_SECURE === 'true',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+    }
+
+    // Standard service configuration (Gmail, etc.)
     const emailConfig = {
         service: process.env.EMAIL_SERVICE || 'gmail',
         auth: {
@@ -223,7 +237,7 @@ app.post('/api/contact', async (req, res) => {
                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e9ecef; text-align: center;">
                         <p style="color: #7f8c8d; font-size: 14px; margin: 0;">
                             RefillPlanet - Sustainable Solutions for a Better Tomorrow<br>
-                            Email: info@refillplanet.com | Phone: +1 (555) 123-4567
+                            Email: info@therefillplanet.com | Phone: +1 (555) 123-4567
                         </p>
                     </div>
                 </div>
@@ -232,8 +246,8 @@ app.post('/api/contact', async (req, res) => {
 
         // Send email to admin
         const adminMailOptions = {
-            from: `"RefillPlanet Contact Form" <${process.env.EMAIL_USER || 'noreply@refillplanet.com'}>`,
-            to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'admin@refillplanet.com',
+            from: `"RefillPlanet Contact Form" <${process.env.EMAIL_USER || 'contact@therefillplanet.com'}>`,
+            to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'admin@therefillplanet.com',
             subject: `New Contact Form: ${sanitizedData.subject}`,
             html: adminEmailTemplate,
             replyTo: sanitizedData.email
@@ -241,7 +255,7 @@ app.post('/api/contact', async (req, res) => {
 
         // Send auto-reply to user
         const userMailOptions = {
-            from: `"RefillPlanet" <${process.env.EMAIL_USER || 'noreply@refillplanet.com'}>`,
+            from: `"RefillPlanet" <${process.env.EMAIL_USER || 'noreply@therefillplanet.com'}>`,
             to: sanitizedData.email,
             subject: 'Thank you for contacting RefillPlanet - We\'ve received your message',
             html: userEmailTemplate
@@ -297,9 +311,9 @@ app.listen(PORT, () => {
     
     if (process.env.NODE_ENV !== 'production') {
         console.log('\n📧 Email Configuration:');
-        console.log(`   Service: ${process.env.EMAIL_SERVICE || 'gmail'}`);
-        console.log(`   User: ${process.env.EMAIL_USER || 'Not configured'}`);
-        console.log(`   Admin Email: ${process.env.ADMIN_EMAIL || 'Not configured'}`);
+        console.log(`   Service: ${process.env.EMAIL_SERVICE || 'custom SMTP'}`);
+        console.log(`   User: ${process.env.EMAIL_USER || 'contact@therefillplanet.com'}`);
+        console.log(`   Admin Email: ${process.env.ADMIN_EMAIL || 'admin@therefillplanet.com'}`);
         console.log('\n⚠️  Make sure to set up your environment variables for email functionality!');
     }
 });
