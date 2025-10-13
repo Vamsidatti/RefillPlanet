@@ -1,0 +1,62 @@
+<!-- Professional Background for RefillPlanet Hero Section -->
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#4facfe;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0099cc;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="sunGrad" cx="80%" cy="20%" r="15%">
+      <stop offset="0%" style="stop-color:#FFE55C;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0.3" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Sky Background -->
+  <rect width="100%" height="100%" fill="url(#skyGrad)"/>
+  
+  <!-- Sun -->
+  <circle cx="1536" cy="216" r="120" fill="url(#sunGrad)"/>
+  
+  <!-- Floating water particles -->
+  <g opacity="0.6">
+    <circle cx="200" cy="200" r="8" fill="rgba(255,255,255,0.8)">
+      <animate attributeName="cy" values="200;180;200" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1600" cy="300" r="6" fill="rgba(255,255,255,0.7)">
+      <animate attributeName="cy" values="300;270;300" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="400" cy="150" r="10" fill="rgba(255,255,255,0.9)">
+      <animate attributeName="cy" values="150;120;150" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1200" cy="250" r="7" fill="rgba(255,255,255,0.6)">
+      <animate attributeName="cy" values="250;230;250" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Environmental elements in background -->
+  <g opacity="0.4">
+    <!-- Stylized mountains/hills -->
+    <path d="M 0 800 Q 300 600 600 700 Q 900 550 1200 650 Q 1500 500 1920 600 L 1920 1080 L 0 1080 Z" 
+          fill="rgba(76, 175, 80, 0.3)"/>
+    
+    <!-- Water ripples -->
+    <ellipse cx="960" cy="900" rx="200" ry="50" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+    <ellipse cx="960" cy="900" rx="300" ry="75" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+    <ellipse cx="960" cy="900" rx="400" ry="100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
+  </g>
+  
+  <!-- Subtle leaf patterns -->
+  <g opacity="0.3">
+    <ellipse cx="150" cy="600" rx="20" ry="50" fill="#4caf50" transform="rotate(30 150 600)"/>
+    <ellipse cx="1750" cy="700" rx="25" ry="60" fill="#4caf50" transform="rotate(-45 1750 700)"/>
+    <ellipse cx="300" cy="800" rx="15" ry="40" fill="#2e7d32" transform="rotate(60 300 800)"/>
+  </g>
+  
+  <!-- Subtle RefillPlanet branding -->
+  <g transform="translate(50, 50)" opacity="0.2">
+    <circle cx="30" cy="30" r="25" fill="none" stroke="white" stroke-width="3"/>
+    <path d="M 15 30 Q 30 15 45 30 Q 30 45 15 30" fill="white" opacity="0.4"/>
+  </g>
+</svg>
