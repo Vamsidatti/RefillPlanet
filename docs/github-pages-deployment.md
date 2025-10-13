@@ -73,4 +73,4 @@ Use these files for GitHub Pages deployment:
 - **Custom domain**: Support included
 - **SSL**: Automatic HTTPS
 
-This is much better than Heroku for simple websites!
+Perfect for professional business websites like RefillPlanet!

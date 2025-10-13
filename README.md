@@ -119,33 +119,26 @@ refill-planet-web-ui/
 
 ## 🚀 Deployment
 
-### Heroku Deployment
+### GitHub Pages (Current Setup)
 
-1. **Install Heroku CLI**
-2. **Login to Heroku**
-   ```bash
-   heroku login
+Your website is automatically deployed to GitHub Pages:
+- **URL**: `https://vamsidatti.github.io/RefillPlanet/`
+- **Auto-deploy**: Pushes to `main` branch trigger deployment
+- **Contact Forms**: Use Netlify Forms (already configured)
+- **Cost**: Completely free
+
+### Custom Domain Setup (Optional)
+
+When you buy `therefillplanet.com`:
+1. **Add DNS records**:
    ```
-
-3. **Create Heroku app**
-   ```bash
-   heroku create your-app-name
+   Type: A, Name: @, Value: 185.199.108.153
+   Type: A, Name: @, Value: 185.199.109.153
+   Type: CNAME, Name: www, Value: vamsidatti.github.io
    ```
+2. **Update GitHub Pages** settings with custom domain
 
-4. **Set environment variables**
-   ```bash
-   heroku config:set EMAIL_USER=your-email@gmail.com
-   heroku config:set EMAIL_PASS=your-app-password
-   heroku config:set ADMIN_EMAIL=admin@refillplanet.com
-   heroku config:set NODE_ENV=production
-   ```
-
-5. **Deploy**
-   ```bash
-   git push heroku main
-   ```
-
-### Netlify Deployment (Frontend Only)
+### Netlify Deployment (Alternative)
 
 If you only want to deploy the frontend:
 
