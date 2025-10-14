@@ -65,15 +65,17 @@ body {
     padding: 0;
 }
 
-/* Fix container widths globally */
-.container,
-.hero-container,
-.nav-container {
-    max-width: 100% !important;
-    width: 100% !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-    box-sizing: border-box !important;
+/* Mobile-specific container fixes only */
+@media (max-width: 768px) {
+    .container,
+    .hero-container,
+    .nav-container {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        box-sizing: border-box !important;
+    }
 }
 
 /* Modern Navigation */
@@ -303,98 +305,91 @@ body {
     }
 }
 
-/* Floating cards - desktop only (1024px+) */
-@media (min-width: 1024px) {
-    .floating-card {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(20px);
-        padding: 1.2rem 1.6rem;
-        border-radius: var(--border-radius-md);
-        box-shadow: var(--shadow-medium);
-        display: flex;
-        align-items: center;
-        gap: 0.7rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        z-index: 5;
-        max-width: 350px;
-        width: auto;
-        line-height: 1.4;
-        border: 2px solid rgba(46, 204, 113, 0.2);
-        min-height: 70px;
-    }
-
-    /* Special sizing for center cards with longer text - desktop only */
-    .card-5, .card-8 {
-        max-width: 350px;
-        width: 350px;
-        padding: 1.6rem 1.6rem;
-        min-height: 100px;
-        height: auto;
-        font-size: 1rem;
-        align-items: flex-start;
-        line-height: 1.4;
-        flex-wrap: wrap;
-    }
-
-    /* Allow text wrapping in center cards - desktop only */
-    .card-5 span, .card-8 span {
-        word-wrap: break-word;
-        white-space: normal;
-        text-align: left;
-        flex: 1;
-        max-width: calc(100% - 2rem);
-        overflow-wrap: break-word;
-        hyphens: auto;
-    }
-
-    .floating-card:hover {
-        transform: scale(1.05) translateY(-5px) !important;
-        box-shadow: var(--shadow-heavy);
-    }
-
-    .floating-card i {
-        font-size: 1.1rem;
-        min-width: 1.5rem;
-        color: var(--primary);
-        flex-shrink: 0;
-    }
+/* Floating cards - Original design restored */
+.floating-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 1.2rem 1.6rem;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-medium);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+    max-width: 350px;
+    width: auto;
+    line-height: 1.4;
+    border: 2px solid rgba(46, 204, 113, 0.2);
+    min-height: 70px;
 }
 
-/* Hide floating cards on all screen sizes smaller than 1024px */
-@media (max-width: 1023px) {
-    .floating-card {
-        display: none !important;
-    }
+/* Special sizing for center cards with longer text */
+.card-5, .card-8 {
+    max-width: 350px;
+    width: 350px;
+    padding: 1.6rem 1.6rem;
+    min-height: 100px;
+    height: auto;
+    font-size: 1rem;
+    align-items: flex-start;
+    line-height: 1.4;
+    flex-wrap: wrap;
 }
 
-/* Add subtle connecting lines for visual structure - desktop only */
-@media (min-width: 1024px) {
-    .hero-image-container::before {
-        content: '';
-        position: absolute;
-        top: 20%;
-        left: -25%;
-        width: 150%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.2), transparent);
-        z-index: 1;
-    }
+/* Allow text wrapping in center cards */
+.card-5 span, .card-8 span {
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: left;
+    flex: 1;
+    max-width: calc(100% - 2rem);
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
 
-    .hero-image-container::after {
-        content: '';
-        position: absolute;
-        top: 70%;
-        left: -25%;
-        width: 150%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.2), transparent);
-        z-index: 1;
-    }
+.floating-card:hover {
+    transform: scale(1.05) translateY(-5px) !important;
+    box-shadow: var(--shadow-heavy);
+}
+
+.floating-card i {
+    font-size: 1.1rem;
+    min-width: 1.5rem;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+/* Add subtle connecting lines for visual structure */
+.hero-image-container {
+    position: relative;
+}
+
+.hero-image-container::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: -25%;
+    width: 150%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.2), transparent);
+    z-index: 1;
+}
+
+.hero-image-container::after {
+    content: '';
+    position: absolute;
+    top: 70%;
+    left: -25%;
+    width: 150%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.2), transparent);
+    z-index: 1;
 }
 
 /* Larger icons for center cards */
@@ -1065,9 +1060,15 @@ body {
         flex-direction: column;
     }
     
-    /* Hide floating cards on tablet too for cleaner experience */
+    /* Hide floating cards on tablet for cleaner experience */
     .floating-card {
         display: none !important;
+    }
+    
+    /* Hide connecting lines on tablet */
+    .hero-image-container::before,
+    .hero-image-container::after {
+        display: none;
     }
     
     /* Adjust hero text for tablet */
@@ -1338,7 +1339,7 @@ body {
     /* Hide connecting lines on small screens */
     .hero-image-container::before,
     .hero-image-container::after {
-        display: none;
+        display: none !important;
     }
     
     /* Compact stats on very small screens */
