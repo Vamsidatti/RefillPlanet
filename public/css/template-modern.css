@@ -369,6 +369,26 @@ body {
     opacity: 0.9;
 }
 
+/* Responsive floating card classes - gentle scaling only */
+.floating-card.tablet-repositioned {
+    transform: scale(0.8);
+    font-size: 0.85rem;
+}
+
+.floating-card.desktop-positioned {
+    transform: scale(1);
+    font-size: 1rem;
+}
+
+.floating-card.mobile-hidden {
+    display: none !important;
+}
+
+/* Smooth transitions for floating card scaling */
+.floating-card {
+    transition: transform 0.3s ease-in-out;
+}
+
 /* Add subtle connecting lines for visual structure */
 .hero-image-container {
     position: relative;
@@ -979,9 +999,31 @@ body {
     align-items: center;
 }
 
-/* Tablet and smaller laptop responsive - stack columns */
+/* Dynamic responsive classes - controlled by JavaScript */
+.about-content-modern.dynamic-single-column {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+    text-align: center !important;
+}
+
+.about-content-modern.dynamic-two-column {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 4rem !important;
+    text-align: left !important;
+}
+
+/* Smooth transitions for responsive changes */
+.about-content-modern {
+    transition: all 0.3s ease-in-out;
+}
+
+.mission-image {
+    transition: height 0.3s ease-in-out;
+}
+
+/* Tablet and smaller laptop responsive - fallback for non-JS users */
 @media (max-width: 1200px) {
-    .about-content-modern {
+    .about-content-modern:not(.dynamic-single-column):not(.dynamic-two-column) {
         grid-template-columns: 1fr !important;
         gap: 3rem !important;
         text-align: center !important;
