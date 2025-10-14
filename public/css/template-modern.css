@@ -979,6 +979,20 @@ body {
     align-items: center;
 }
 
+/* Tablet responsive - stack columns on smaller laptops */
+@media (max-width: 1024px) {
+    .about-content-modern {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+    
+    .mission-image {
+        height: 350px;
+        margin-top: 1rem;
+    }
+}
+
 /* Mission Image */
 .about-image {
     display: flex;
