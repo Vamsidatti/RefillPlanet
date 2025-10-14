@@ -63,16 +63,42 @@ class ResponsiveLayoutManager {
 
     adjustAboutSection(shouldStack, screenWidth) {
         const aboutContent = document.querySelector('.about-content-modern');
+        const aboutSection = document.querySelector('.about-modern');
+        const aboutCta = document.querySelector('.about-cta');
+        
         if (!aboutContent) return;
 
+        // TEMPORARILY DISABLE DYNAMIC LAYOUT CHANGES FOR DEBUGGING
         // Remove any existing dynamic classes
-        aboutContent.classList.remove('dynamic-single-column', 'dynamic-two-column');
+        // aboutContent.classList.remove('dynamic-single-column', 'dynamic-two-column');
 
         // Apply the appropriate layout
-        if (shouldStack) {
-            aboutContent.classList.add('dynamic-single-column');
-        } else {
-            aboutContent.classList.add('dynamic-two-column');
+        // if (shouldStack) {
+        //     aboutContent.classList.add('dynamic-single-column');
+        // } else {
+        //     aboutContent.classList.add('dynamic-two-column');
+        // }
+        
+        // Fix spacing issues by applying proper margins
+        if (aboutSection) {
+            if (screenWidth <= 768) {
+                aboutSection.style.padding = '50px 0 25px 0';
+            } else if (screenWidth <= 1024) {
+                aboutSection.style.padding = '70px 0 30px 0';
+            } else {
+                aboutSection.style.padding = '120px 0 40px 0';
+            }
+        }
+        
+        // Fix CTA button spacing
+        if (aboutCta) {
+            if (screenWidth <= 768) {
+                aboutCta.style.marginTop = '2rem';
+                aboutCta.style.marginBottom = '1rem';
+            } else {
+                aboutCta.style.marginTop = '2.5rem';
+                aboutCta.style.marginBottom = '1.5rem';
+            }
         }
         
         this.adjustImageSize(screenWidth);
@@ -111,11 +137,11 @@ class ResponsiveLayoutManager {
         if (!missionImage) return;
 
         if (screenWidth <= 768) {
-            missionImage.style.height = '250px';
+            missionImage.style.height = '350px';
         } else if (screenWidth <= 1024) {
-            missionImage.style.height = '300px';
+            missionImage.style.height = '450px';
         } else {
-            missionImage.style.height = '400px';
+            missionImage.style.height = '550px';
         }
     }
 
@@ -164,7 +190,9 @@ class ResponsiveLayoutManager {
     }
 }
 
+// TEMPORARILY DISABLED FOR DEBUGGING
 // Initialize when DOM is ready
+/*
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         new ResponsiveLayoutManager();
@@ -175,3 +203,4 @@ if (document.readyState === 'loading') {
 
 // Export for potential use elsewhere
 window.ResponsiveLayoutManager = ResponsiveLayoutManager;
+*/

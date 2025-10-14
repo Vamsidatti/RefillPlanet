@@ -1,10 +1,14 @@
 // Simplified JavaScript for GitHub Pages (no backend calls)
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize components
-    initMobileMenu();
-    initSmoothScrolling();
-    initScrollAnimations();
-    initFormHandling();
+    // Initialize only essential components that don't cause layout shifts
+    setTimeout(() => {
+        initMobileMenu();
+        initFormHandling();
+    }, 50);
+    
+    // Keep scroll-dependent functions disabled to prevent layout shifts
+    // initSmoothScrolling();
+    // initScrollAnimations();
 });
 
 // Mobile Menu Toggle
@@ -96,15 +100,19 @@ function initScrollAnimations() {
     });
 }
 
-// Add navbar scroll effect
-window.addEventListener('scroll', throttle(() => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-}, 100));
+// Add navbar scroll effect with delayed initialization - DISABLED to prevent layout shifts
+/*
+setTimeout(() => {
+    window.addEventListener('scroll', throttle(() => {
+        const navbar = document.querySelector('.navbar');
+        if (navbar && window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else if (navbar) {
+            navbar.classList.remove('scrolled');
+        }
+    }, 100));
+}, 200);
+*/
 
 // Utility Functions
 function throttle(func, limit) {
@@ -134,21 +142,26 @@ function addScrollToTop() {
         border: none;
         border-radius: 50%;
         cursor: pointer;
-        display: none;
+        opacity: 0;
+        visibility: hidden;
         z-index: 1000;
         box-shadow: var(--shadow-medium);
-        transition: var(--transition);
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     `;
     
     document.body.appendChild(scrollButton);
     
+    // Use opacity/visibility instead of display to avoid layout shifts
     window.addEventListener('scroll', throttle(() => {
         if (window.scrollY > 500) {
-            scrollButton.style.display = 'flex';
-            scrollButton.style.alignItems = 'center';
-            scrollButton.style.justifyContent = 'center';
+            scrollButton.style.opacity = '1';
+            scrollButton.style.visibility = 'visible';
         } else {
-            scrollButton.style.display = 'none';
+            scrollButton.style.opacity = '0';
+            scrollButton.style.visibility = 'hidden';
         }
     }, 100));
     
@@ -160,5 +173,9 @@ function addScrollToTop() {
     });
 }
 
-// Initialize scroll-to-top button
-addScrollToTop();
+// Initialize scroll-to-top button with delayed initialization - DISABLED to prevent layout shifts
+/*
+setTimeout(() => {
+    addScrollToTop();
+}, 300);
+*/

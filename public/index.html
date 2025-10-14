@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RefillPlanet - Sustainable Solutions</title>
-    <link rel="stylesheet" href="css/style.css?v=20251013">
-    <link rel="stylesheet" href="css/components.css?v=20251013">
-    <link rel="stylesheet" href="css/template-modern.css?v=20251013">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='%2322c55e' d='M272 96c26.51 0 48-21.49 48-48S298.51 0 272 0s-48 21.49-48 48 21.49 48 48 48zM209.1 198.6L169.5 159c-11.3-11.31-29.7-11.31-41 0s-11.31 29.69 0 41l39.6 39.6c32.4 32.4 85.1 32.4 117.5 0l39.6-39.6c11.31-11.31 11.31-29.69 0-41s-29.69-11.31-41 0l-39.6 39.6c-15.1 15.1-39.4 15.1-54.5 0zM272 416c52.93 0 96-43.07 96-96 0-25.55-9.8-48.85-25.86-66.15C364.5 240.4 384 214.3 384 184c0-30.93-25.07-56-56-56h-112c-30.93 0-56 25.07-56 56 0 30.3 19.5 56.4 46.86 69.85C190.8 271.15 176 294.45 176 320c0 52.93 43.07 96 96 96z'/></svg>" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='%2322c55e' d='M272 96c26.51 0 48-21.49 48-48S298.51 0 272 0s-48 21.49-48 48 21.49 48 48 48zM209.1 198.6L169.5 159c-11.3-11.31-29.7-11.31-41 0s-11.31 29.69 0 41l39.6 39.6c32.4 32.4 85.1 32.4 117.5 0l39.6-39.6c11.31-11.31 11.31-29.69 0-41s-29.69-11.31-41 0l-39.6 39.6c-15.1 15.1-39.4 15.1-54.5 0zM272 416c52.93 0 96-43.07 96-96 0-25.55-9.8-48.85-25.86-66.15C364.5 240.4 384 214.3 384 184c0-30.93-25.07-56-56-56h-112c-30.93 0-56 25.07-56 56 0 30.3 19.5 56.4 46.86 69.85C190.8 271.15 176 294.45 176 320c0 52.93 43.07 96 96 96z'/></svg>">
+    
+    <link rel="stylesheet" href="css/style.css?v=20251020">
+    <link rel="stylesheet" href="css/components.css?v=20251020">
+    <link rel="stylesheet" href="css/template-modern.css?v=20251021">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -402,12 +407,15 @@
                         <i class="fas fa-globe"></i>
                         <span>Our Mission</span>
                     </div>
-                    <h2>Building a Refill Culture for a Sustainable Future</h2>
+                    <h2>Building a Refill Culture for a Sustainable Future through Patent-Pending Design.</h2>
                     <p class="about-description">
                         At Refill Planet™, we collaborate with venues and organizations to make sustainable choices simple, visible, and scalable.
                     </p>
                     <p class="about-description">
-                        Our goal is to reduce single-use plastic waste by empowering refill-friendly spaces — helping partners demonstrate measurable environmental impact without added effort.
+                        Through our patent-pending Refill Behavior System, we create refill-friendly spaces designed for maximum visibility and accessibility — optimizing placement, signage, and engagement to inspire everyday users to choose refill over single-use.
+                    </p>
+                    <p class="about-description">
+                        Our approach transforms intention into measurable action — helping partners reduce plastic waste, demonstrate real environmental impact, and lead visibly in sustainability innovation, all without added effort.
                     </p>
                     <div class="about-highlights">
                         <div class="highlight-item">
@@ -432,7 +440,8 @@
                     <img src="images/mission/family-refill-station-web.jpg" 
                          alt="Family using water refill station - father, mother and child filling reusable water bottle together" 
                          class="mission-image" 
-                         loading="lazy" />
+                         loading="lazy"
+                         onload="this.classList.add('loaded'); this.parentElement.classList.add('image-loaded')" />
                 </div>
             </div>
         </div>
@@ -662,9 +671,10 @@
         </div>
     </footer>
 
+    <!-- TESTING ONE JS FILE AT A TIME -->
     <script src="js/script-static.js"></script>
-    <script src="js/hero-background-loader.js"></script>
-    <script src="js/responsive-layout.js"></script>
+    <!-- <script src="js/hero-background-loader.js"></script> -->
+    <!-- <script src="js/responsive-layout.js"></script> -->
     
     <style>
         .hidden { display: none; }

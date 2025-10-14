@@ -1064,8 +1064,16 @@ body {
 
 /* About Section */
 .about-modern {
-    padding: 100px 0;
+    padding: 120px 0 40px 0 !important;
     background: white;
+}
+
+/* Force override for about section */
+section.about-modern {
+    padding: 120px 0 40px 0 !important;
+}
+section#about.about-modern {
+    padding: 120px 0 40px 0 !important;
 }
 
 .about-content-modern {
@@ -1106,7 +1114,8 @@ body {
     }
     
     .mission-image {
-        height: 350px !important;
+        height: 600px !important;
+        object-position: center center !important;
         margin-top: 1rem !important;
     }
 }
@@ -1116,15 +1125,49 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 2rem 0;
+    min-height: 650px !important;
+    position: relative;
+}
+
+.about-image::before {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    right: 0;
+    bottom: 2rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: var(--border-radius-lg);
+    z-index: 0;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.about-image:has(.mission-image.loaded)::before,
+.about-image.image-loaded::before {
+    opacity: 0;
 }
 
 .mission-image {
     width: 100%;
-    height: 400px;
+    height: 650px !important;
     object-fit: cover;
+    object-position: center center;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-medium);
     transition: var(--animation-normal);
+    margin: 1.5rem 0;
+    opacity: 0;
+    transform: scale(1.05);
+    position: relative;
+    z-index: 1;
+}
+
+.mission-image.loaded {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .mission-image:hover {
@@ -1141,24 +1184,47 @@ body {
 
 .about-highlights {
     margin-bottom: 2rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .highlight-item {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
+    flex: 1;
+    min-width: 150px;
+    font-size: 0.9rem;
 }
 
 .highlight-item i {
     color: var(--primary-color);
-    font-size: 1.25rem;
+    font-size: 1.1rem;
 }
 
 .about-cta {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    margin-top: 2rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Force CTA button spacing with multiple selectors */
+div.about-cta {
+    margin-top: 2rem !important;
+    margin-bottom: 1.5rem !important;
+}
+.about-content-modern div.about-cta {
+    margin-top: 2rem !important;
+    margin-bottom: 1.5rem !important;
+}
+.about-modern .about-content-modern .about-cta {
+    margin-top: 2rem !important;
+    margin-bottom: 1.5rem !important;
 }
 
 .btn-outline {
@@ -1780,16 +1846,44 @@ body {
     }
     
     /* About section responsive */
+    .about-modern {
+        padding: 70px 0 30px 0 !important;
+    }
+    
+    /* Force responsive about section */
+    section.about-modern {
+        padding: 70px 0 30px 0 !important;
+    }
+    section#about.about-modern {
+        padding: 70px 0 30px 0 !important;
+    }
+    
     .about-content-modern {
         grid-template-columns: 1fr;
         gap: 2rem;
         text-align: center;
     }
     
+    .about-content-modern .about-cta {
+        margin-top: 2.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    /* Force responsive CTA spacing */
+    div.about-cta {
+        margin-top: 2.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    .about-content-modern div.about-cta {
+        margin-top: 2.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    
     /* Mission image responsive */
     .mission-image {
-        height: 280px;
-        margin-top: 2rem;
+        height: 580px !important;
+        object-position: center center !important;
+        margin: 2rem 0 !important;
     }
     
     .about-image-grid {
@@ -1940,4 +2034,65 @@ body {
     .stat-label {
         font-size: 0.7rem;
     }
+    
+    /* About section mobile spacing */
+    .about-modern {
+        padding: 50px 0 25px 0 !important;
+    }
+    
+    /* Force mobile about section */
+    section.about-modern {
+        padding: 50px 0 25px 0 !important;
+    }
+    section#about.about-modern {
+        padding: 50px 0 25px 0 !important;
+    }
+    
+    .about-content-modern .about-cta {
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Force mobile CTA spacing */
+    div.about-cta {
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+    .about-content-modern div.about-cta {
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+}
+
+/* CRITICAL: Override all dynamic JavaScript classes */
+/* Target all possible combinations that responsive-layout.js might create */
+section.about-modern.dynamic-single-column,
+section#about.about-modern.dynamic-single-column,
+.about-modern.dynamic-single-column,
+section.about-modern.dynamic-two-column,
+section#about.about-modern.dynamic-two-column,
+.about-modern.dynamic-two-column,
+.about-modern[class*="dynamic"] {
+    padding: 50px 0 25px 0 !important;
+}
+
+/* Override CTA spacing for ALL dynamic scenarios */
+.about-modern.dynamic-single-column .about-cta,
+.about-modern.dynamic-two-column .about-cta,
+section.about-modern.dynamic-single-column .about-cta,
+section.about-modern.dynamic-two-column .about-cta,
+.about-content-modern.dynamic-single-column .about-cta,
+.about-content-modern.dynamic-two-column .about-cta,
+.about-content-modern .about-cta[class*="dynamic"],
+div.about-cta[class*="dynamic"] {
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
+}
+
+/* NUCLEAR OPTION: Override ANY about spacing regardless of classes */
+[id*="about"] * .about-cta,
+section[class*="about"] .about-cta,
+*[class*="about"] .about-cta {
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
 }
