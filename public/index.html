@@ -20,8 +20,10 @@
     <nav class="navbar navbar-modern">
         <div class="nav-container">
             <div class="nav-logo">
-                <i class="fas fa-leaf"></i>
-                <h2>RefillPlanet</h2>
+                <a href="#home" class="logo-link">
+                    <i class="fas fa-leaf"></i>
+                    <h2>RefillPlanet</h2>
+                </a>
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -89,10 +91,13 @@
                         <i class="fas fa-rocket"></i>
                         Start Your Journey
                     </a>
+                    <!-- Watch Demo button hidden - not ready yet -->
+                    <!-- 
                     <a href="#about" class="btn btn-secondary btn-lg">
                         <i class="fas fa-play"></i>
                         Watch Demo
                     </a>
+                    -->
                 </div>
             </div>
             <div class="hero-visual">
@@ -412,7 +417,7 @@
                         At Refill Planet™, we collaborate with venues and organizations to make sustainable choices simple, visible, and scalable.
                     </p>
                     <p class="about-description">
-                        Through our patent-pending Refill Behavior System, we create refill-friendly spaces designed for maximum visibility and accessibility — optimizing placement, signage, and engagement to inspire everyday users to choose refill over single-use.
+                        Through our patent-pending Refill Behavior System, we create refill-friendly spaces designed for maximum visibility and accessibility — optimizing placement, signage, and engagement to inspire everyday users to choose refill over single-use plastic bottles.
                     </p>
                     <p class="about-description">
                         Our approach transforms intention into measurable action — helping partners reduce plastic waste, demonstrate real environmental impact, and lead visibly in sustainability innovation, all without added effort.
@@ -675,6 +680,46 @@
     <script src="js/script-static.js"></script>
     <!-- <script src="js/hero-background-loader.js"></script> -->
     <!-- <script src="js/responsive-layout.js"></script> -->
+    
+    <!-- Handle anchor positioning on hard refresh -->
+    <script>
+        // Handle hash anchor positioning on page load (including hard refresh)
+        (function() {
+            function scrollToAnchor() {
+                const hash = window.location.hash;
+                if (hash && hash.length > 1) {
+                    const targetElement = document.querySelector(hash);
+                    if (targetElement) {
+                        // Use a short delay to ensure page layout is complete
+                        setTimeout(function() {
+                            const offsetTop = targetElement.offsetTop - 30; // Match CSS scroll margins
+                            window.scrollTo({
+                                top: offsetTop,
+                                behavior: 'smooth'
+                            });
+                        }, 100);
+                    }
+                }
+            }
+            
+            // Handle on DOM content loaded
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', scrollToAnchor);
+            } else {
+                scrollToAnchor();
+            }
+            
+            // Also handle window load event for complete certainty
+            window.addEventListener('load', function() {
+                setTimeout(scrollToAnchor, 200);
+            });
+            
+            // Handle hash change events (when user clicks nav links)
+            window.addEventListener('hashchange', function() {
+                setTimeout(scrollToAnchor, 50);
+            });
+        })();
+    </script>
     
     <style>
         .hidden { display: none; }

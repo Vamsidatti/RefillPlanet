@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         initMobileMenu();
         initFormHandling();
+        initSmoothScrolling(); // Re-enable smooth scrolling for navigation
     }, 50);
     
     // Keep scroll-dependent functions disabled to prevent layout shifts
-    // initSmoothScrolling();
     // initScrollAnimations();
 });
 
@@ -45,7 +45,7 @@ function initSmoothScrolling() {
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 80; // Account for fixed navbar
+                const offsetTop = targetSection.offsetTop - 30; // Match global scroll margin settings
                 
                 window.scrollTo({
                     top: offsetTop,
@@ -173,9 +173,7 @@ function addScrollToTop() {
     });
 }
 
-// Initialize scroll-to-top button with delayed initialization - DISABLED to prevent layout shifts
-/*
+// Initialize scroll-to-top button with delayed initialization
 setTimeout(() => {
     addScrollToTop();
 }, 300);
-*/
