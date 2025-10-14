@@ -261,10 +261,10 @@ body {
 .hero-image-container {
     position: relative;
     width: 100%;
-    max-width: 600px;
-    min-height: 450px;
+    max-width: 800px;
+    min-height: 600px;
     overflow: visible;
-    margin: 80px 0;
+    margin: 100px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -403,36 +403,32 @@ body {
 }
 
 @media (max-width: 1024px) {
+    .hero-image-container {
+        max-width: 650px !important;
+        min-height: 500px !important;
+        margin: 60px 0 !important;
+    }
+    
     .floating-card {
         transform: scale(0.75);
         max-width: 240px !important;
         font-size: 0.8rem !important;
     }
     
-    /* Adjust left cards for smaller laptops */
-    .card-1 {
-        left: 2% !important;
-    }
-    
-    .card-3 {
-        left: 1% !important;
-    }
-    
-    .card-7 {
-        left: 3% !important;
-    }
-    
-    /* Adjust right cards for smaller laptops */
+    /* Adjust right cards for smaller laptops - move them closer to center */
     .card-2 {
-        right: 2% !important;
+        right: 4% !important;
+        top: 25% !important;
     }
     
     .card-4 {
-        right: 1% !important;
+        right: 2% !important;
+        top: 45% !important;
     }
     
     .card-6 {
-        right: 3% !important;
+        right: 5% !important;
+        top: 65% !important;
     }
 }
 
@@ -475,59 +471,50 @@ body {
     margin-right: 0.6rem;
 }
 
-/* Clean separated positioning - cards positioned around center image */
+/* Clean separated positioning - center and right cards only */
 
-/* LEFT COLUMN - Positioned on the left side */
-.card-1 {
-    top: 20%;
-    left: 5%;
-    animation: floatingCard1 3.2s ease-in-out infinite;
-}
-
-.card-3 {
-    top: 45%;
-    left: 2%;
-    animation: floatingCard3 3.6s ease-in-out infinite;
-}
-
-.card-7 {
-    top: 70%;
-    left: 8%;
-    animation: floatingCard7 3.9s ease-in-out infinite;
-}
-
-/* RIGHT COLUMN - Positioned away from center cards but still visible */
-.card-2 {
-    top: 25%;
-    right: 5%;
-    animation: floatingCard2 3.5s ease-in-out infinite;
-}
-
-.card-4 {
-    top: 50%;
-    right: 2%;
-    animation: floatingCard4 3.8s ease-in-out infinite;
-}
-
-.card-6 {
-    top: 75%;
-    right: 8%;
-    animation: floatingCard6 3.3s ease-in-out infinite;
-}
-
-/* CENTER CARDS - Properly spaced from image */
+/* CENTER CARDS - Positioned relative to hero section, not image container */
 .card-5 {
-    top: 5%;
+    position: fixed;
+    top: 18vh;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 1000;
     animation: floatingCard5 4.2s ease-in-out infinite;
 }
 
 .card-8 {
-    bottom: 5%;
+    position: fixed;
+    top: 70vh;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 1000;
     animation: floatingCard8 3.7s ease-in-out infinite;
+}
+
+/* RIGHT COLUMN - Evenly spaced between top and bottom center cards */
+.card-2 {
+    position: fixed;
+    top: 35vh;
+    right: 3vw;
+    z-index: 1000;
+    animation: floatingCard2 3.5s ease-in-out infinite;
+}
+
+.card-4 {
+    position: fixed;
+    top: 47.5vh;
+    right: 1vw;
+    z-index: 1000;
+    animation: floatingCard4 3.8s ease-in-out infinite;
+}
+
+.card-6 {
+    position: fixed;
+    top: 60vh;
+    right: 3vw;
+    z-index: 1000;
+    animation: floatingCard6 3.3s ease-in-out infinite;
 }
 
 /* Individual card animations with different movements */
