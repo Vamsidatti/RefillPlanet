@@ -255,6 +255,7 @@ body {
 .hero-visual {
     position: relative;
     animation: slideInRight 1s ease 0.5s both;
+    overflow: hidden; /* Prevent floating cards from causing horizontal scroll */
 }
 
 .hero-image-container {
@@ -327,6 +328,9 @@ body {
     line-height: 1.4;
     border: 1px solid rgba(255, 255, 255, 0.3);
     min-height: 70px;
+    /* Ensure cards never go outside viewport */
+    right: max(10px, 1%) !important;
+    transform-origin: right center;
 }
 
 /* Special sizing for center cards with longer text */
@@ -390,17 +394,25 @@ body {
 }
 
 /* Additional responsive adjustments for floating cards */
+@media (max-width: 1600px) {
+    .card-2, .card-4, .card-6 {
+        right: 10px !important;
+        max-width: 300px !important;
+    }
+}
+
 @media (max-width: 1400px) {
     .card-2, .card-4, .card-6 {
-        right: 2% !important;
-        max-width: 280px !important;
+        right: 5px !important;
+        max-width: 260px !important;
+        font-size: 0.85rem !important;
     }
 }
 
 @media (max-width: 1200px) {
     .card-2, .card-4, .card-6 {
-        right: 0% !important;
-        max-width: 250px !important;
+        right: 5px !important;
+        max-width: 230px !important;
         font-size: 0.8rem !important;
         padding: 1rem 1.2rem !important;
     }
@@ -408,10 +420,16 @@ body {
 
 @media (max-width: 1024px) {
     .card-2, .card-4, .card-6 {
-        right: -5% !important;
-        max-width: 220px !important;
+        right: 5px !important;
+        max-width: 200px !important;
         font-size: 0.75rem !important;
         padding: 0.8rem 1rem !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .card-2, .card-4, .card-6 {
+        display: none !important;
     }
 }
 
@@ -450,22 +468,22 @@ body {
 
 /* Clean structured positioning - RIGHT COLUMN & CENTER only */
 
-/* RIGHT COLUMN - Vertically stacked within viewport boundaries */
+/* RIGHT COLUMN - Positioned safely within viewport */
 .card-2 {
     top: 25%;
-    right: 5%;
+    right: 10px;
     animation: floatingCard2 3.5s ease-in-out infinite;
 }
 
 .card-4 {
     top: 55%;
-    right: 5%;
+    right: 10px;
     animation: floatingCard4 3.8s ease-in-out infinite;
 }
 
 .card-6 {
     top: 85%;
-    right: 5%;
+    right: 10px;
     animation: floatingCard6 3.3s ease-in-out infinite;
 }
 
