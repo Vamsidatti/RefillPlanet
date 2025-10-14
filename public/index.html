@@ -62,8 +62,8 @@
                     for Our Planet
                 </h1>
                 <p class="hero-subtitle">
-                    Join millions of people making a difference with our innovative refill solutions. 
-                    Reduce waste, save money, and protect the environment with every purchase.
+                    Join the venues redefining hydration and Reducing single-use plastic. Promote 
+                    Buy the Bottle – Not the Water™ refill culture, inspire change, and protect the planet.
                 </p>
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -92,17 +92,25 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-image-container">
-                    <div class="floating-card card-1">
-                        <i class="fas fa-leaf"></i>
-                        <span>Eco-Friendly</span>
-                    </div>
                     <div class="floating-card card-2">
-                        <i class="fas fa-recycle"></i>
-                        <span>100% Recyclable</span>
+                        <i class="fas fa-leaf"></i>
+                        <span>Helping venues go green effortlessly.</span>
                     </div>
-                    <div class="floating-card card-3">
-                        <i class="fas fa-heart"></i>
-                        <span>Community Love</span>
+                    <div class="floating-card card-4">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Measurable ESG results.</span>
+                    </div>
+                    <div class="floating-card card-5">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>A Patent-pending methodology, increases refill adoption.</span>
+                    </div>
+                    <div class="floating-card card-6">
+                        <i class="fas fa-cogs"></i>
+                        <span>Zero Maintenance. 100% Impact.</span>
+                    </div>
+                    <div class="floating-card card-8">
+                        <i class="fa-building"></i>
+                        <span>A turnkey sustainability solution for every venue.</span>
                     </div>
                     <div class="hero-main-image">
                         <!-- Background image will be set via CSS -->
@@ -436,9 +444,24 @@
     </footer>
 
     <script src="js/script-static.js"></script>
+    <script src="js/hero-background-loader.js"></script>
     
     <style>
         .hidden { display: none; }
+        
+        /* Smooth transition when background loads */
+        .hero-modern {
+            transition: background-image 0.5s ease;
+        }
+        
+        .hero-background-loaded {
+            animation: fadeInBackground 0.8s ease;
+        }
+        
+        @keyframes fadeInBackground {
+            from { opacity: 0.8; }
+            to { opacity: 1; }
+        }
     </style>
 </body>
 </html>

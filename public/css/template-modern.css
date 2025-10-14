@@ -110,16 +110,17 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1.2rem;
     border-radius: 50px;
     color: white;
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
     margin-bottom: 2rem;
     animation: slideInUp 0.8s ease 0.2s both;
+    box-shadow: 0 4px 20px rgba(46, 204, 113, 0.4);
 }
 
 .hero-title {
@@ -206,48 +207,209 @@
     position: relative;
     width: 100%;
     max-width: 600px;
+    min-height: 450px;
+    overflow: visible;
+    margin: 80px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add floating sparkle effects */
+.hero-image-container::before,
+.hero-image-container::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: linear-gradient(45deg, #2ecc71, #3498db);
+    border-radius: 50%;
+    animation: sparkle 3s ease-in-out infinite;
+    z-index: 1;
+}
+
+.hero-image-container::before {
+    top: 20%;
+    left: 15%;
+    animation-delay: 1s;
+}
+
+.hero-image-container::after {
+    bottom: 25%;
+    right: 20%;
+    animation-delay: 2.5s;
+}
+
+@keyframes sparkle {
+    0%, 100% { 
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.5) rotate(180deg);
+    }
 }
 
 .floating-card {
     position: absolute;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    padding: 1rem 1.5rem;
+    padding: 1.2rem 1.6rem;
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-medium);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.7rem;
     font-weight: 600;
     color: var(--text-primary);
-    animation: floatingCard 3s ease-in-out infinite;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+    max-width: 350px;
+    width: auto;
+    line-height: 1.4;
+    border: 2px solid rgba(46, 204, 113, 0.2);
+    min-height: 70px;
+}
+
+/* Special sizing for center cards with longer text */
+.card-5, .card-8 {
+    max-width: 350px;
+    width: 350px;
+    padding: 1.6rem 1.6rem;
+    min-height: 100px;
+    height: auto;
+    font-size: 1rem;
+    align-items: flex-start;
+    line-height: 1.4;
+    flex-wrap: wrap;
+}
+
+/* Allow text wrapping in center cards */
+.card-5 span, .card-8 span {
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: left;
+    flex: 1;
+    max-width: calc(100% - 2rem);
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Add subtle connecting lines for visual structure */
+.hero-image-container {
+    position: relative;
+}
+
+.hero-image-container::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: -25%;
+    width: 150%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.2), transparent);
+    z-index: 1;
+}
+
+.hero-image-container::after {
+    content: '';
+    position: absolute;
+    top: 70%;
+    left: -25%;
+    width: 150%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.2), transparent);
+    z-index: 1;
+}
+
+.floating-card:hover {
+    transform: scale(1.05) translateY(-5px) !important;
+    box-shadow: var(--shadow-heavy);
+    background: rgba(255, 255, 255, 1);
 }
 
 .floating-card i {
     color: var(--primary-color);
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-right: 0.4rem;
 }
 
-.card-1 {
-    top: 10%;
-    left: -10%;
-    animation-delay: 0s;
+/* Larger icons for center cards */
+.card-5 i, .card-8 i {
+    font-size: 1.5rem;
+    margin-right: 0.6rem;
 }
 
+/* Clean structured positioning - RIGHT COLUMN & CENTER only */
+
+/* RIGHT COLUMN - Vertically stacked with maximum gap from center */
 .card-2 {
-    top: 40%;
-    right: -15%;
-    animation-delay: 1s;
+    top: 25%;
+    right: -50%;
+    animation: floatingCard2 3.5s ease-in-out infinite;
 }
 
-.card-3 {
-    bottom: 15%;
-    left: -5%;
-    animation-delay: 2s;
+.card-4 {
+    top: 55%;
+    right: -50%;
+    animation: floatingCard4 3.8s ease-in-out infinite;
 }
 
-@keyframes floatingCard {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(1deg); }
+.card-6 {
+    top: 85%;
+    right: -50%;
+    animation: floatingCard6 3.3s ease-in-out infinite;
+}
+
+/* TOP CENTER */
+.card-5 {
+    top: -5%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: floatingCard5 4.2s ease-in-out infinite;
+}
+
+/* BOTTOM CENTER */
+.card-8 {
+    bottom: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: floatingCard8 3.7s ease-in-out infinite;
+}
+
+/* Individual card animations with different movements */
+@keyframes floatingCard2 {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    30% { transform: translateY(-18px) translateX(-4px) rotate(-1deg); }
+    60% { transform: translateY(-6px) translateX(6px) rotate(1.2deg); }
+}
+
+@keyframes floatingCard4 {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    35% { transform: translateY(-14px) translateX(-5px) rotate(-1.2deg); }
+    70% { transform: translateY(-8px) translateX(3px) rotate(0.9deg); }
+}
+
+@keyframes floatingCard5 {
+    0%, 100% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
+    40% { transform: translateX(-50%) translateY(-16px) rotate(0.6deg); }
+    80% { transform: translateX(-50%) translateY(-7px) rotate(-1deg); }
+}
+
+@keyframes floatingCard6 {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    25% { transform: translateY(-12px) translateX(-6px) rotate(-0.8deg); }
+    75% { transform: translateY(-18px) translateX(2px) rotate(1.1deg); }
+}
+
+@keyframes floatingCard8 {
+    0%, 100% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
+    45% { transform: translateX(-50%) translateY(-13px) rotate(-0.9deg); }
+    90% { transform: translateX(-50%) translateY(-17px) rotate(1.4deg); }
 }
 
 .hero-main-image {
@@ -866,6 +1028,18 @@
         position: static;
         margin-bottom: 1rem;
         justify-content: center;
+        animation: none;
+        transform: none;
+    }
+    
+    .hero-image-container {
+        margin: 30px 0;
+        min-height: auto;
+    }
+    
+    /* Hide some cards on mobile to reduce clutter */
+    .card-4, .card-6, .card-7, .card-8 {
+        display: none;
     }
     
     .about-image-grid {

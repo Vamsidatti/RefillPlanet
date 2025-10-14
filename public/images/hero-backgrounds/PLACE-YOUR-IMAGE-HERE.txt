@@ -1,0 +1,10 @@
+# Sample Hero Background
+
+This is a placeholder file to show the folder structure.
+
+Replace this with your actual hero image named:
+- `current-hero-image.jpg`
+- `current-hero-image.png`
+- `current-hero-image.webp`
+
+The website will automatically detect and use whichever format you provide!

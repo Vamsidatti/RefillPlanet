@@ -48,6 +48,13 @@ typings/
 .npm
 
 # Optional eslint cache
+
+# Development demo files (not for production)
+dev-demos/
+*demo*.html
+*showcase*.html
+*animated*.css
+*advanced*.css
 .eslintcache
 
 # Microbundle cache
@@ -137,4 +144,4 @@ dist/
 *.log
 
 # Email testing files (if using Ethereal or similar)
-test-emails/
+test-emails/public/images/hero-backgrounds/current-hero-image.png
