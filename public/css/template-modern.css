@@ -262,13 +262,12 @@ body {
     position: relative;
     width: 100%;
     max-width: 600px;
-    min-height: 500px;
+    min-height: 450px;
     overflow: visible;
-    margin: 60px 0 100px 0;
+    margin: 80px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 0;
 }
 
 /* Add floating sparkle effects */
@@ -394,47 +393,20 @@ body {
     transition: transform 0.3s ease-in-out;
 }
 
-/* Additional responsive adjustments for floating cards */
-@media (max-width: 1400px) {
-    .card-2, .card-4, .card-6 {
-        right: 5px !important;
-        max-width: 260px !important;
-        font-size: 0.85rem !important;
-        padding: 1rem 1.3rem !important;
-    }
-    
-    /* Adjust spacing for smaller screens */
-    .card-2 { top: 10% !important; }
-    .card-4 { top: 40% !important; }
-    .card-6 { top: 70% !important; }
-}
-
+/* Simplified responsive adjustments - hide cards on smaller screens */
 @media (max-width: 1200px) {
-    .card-2, .card-4, .card-6 {
-        right: 5px !important;
-        max-width: 220px !important;
-        font-size: 0.8rem !important;
-        padding: 0.9rem 1.1rem !important;
-    }
-    
-    .card-5, .card-8 {
+    .floating-card {
+        transform: scale(0.85);
         max-width: 280px !important;
         font-size: 0.85rem !important;
     }
 }
 
 @media (max-width: 1024px) {
-    .card-2, .card-4, .card-6 {
-        right: 5px !important;
-        max-width: 200px !important;
-        font-size: 0.75rem !important;
-        padding: 0.8rem 1rem !important;
-    }
-    
-    .card-5, .card-8 {
-        max-width: 260px !important;
+    .floating-card {
+        transform: scale(0.75);
+        max-width: 240px !important;
         font-size: 0.8rem !important;
-        padding: 1rem 1.2rem !important;
     }
 }
 
@@ -477,38 +449,38 @@ body {
     margin-right: 0.6rem;
 }
 
-/* Clean structured positioning - Better spaced layout */
+/* Simplified clean positioning - minimal overlap with image */
 
-/* RIGHT COLUMN - Well spaced vertically */
+/* RIGHT COLUMN - Simple vertical stack */
 .card-2 {
-    top: 15%;
-    right: 10px;
+    top: 20%;
+    right: 15px;
     animation: floatingCard2 3.5s ease-in-out infinite;
 }
 
 .card-4 {
-    top: 45%;
-    right: 10px;
+    top: 50%;
+    right: 15px;
     animation: floatingCard4 3.8s ease-in-out infinite;
 }
 
 .card-6 {
-    top: 75%;
-    right: 10px;
+    top: 80%;
+    right: 15px;
     animation: floatingCard6 3.3s ease-in-out infinite;
 }
 
-/* TOP CENTER */
+/* TOP CENTER - Higher up to avoid image overlap */
 .card-5 {
-    top: 5%;
+    top: -10%;
     left: 50%;
     transform: translateX(-50%);
     animation: floatingCard5 4.2s ease-in-out infinite;
 }
 
-/* BOTTOM CENTER - Positioned to be fully visible */
+/* BOTTOM CENTER - Lower down for better visibility */
 .card-8 {
-    bottom: 5%;
+    bottom: -15%;
     left: 50%;
     transform: translateX(-50%);
     animation: floatingCard8 3.7s ease-in-out infinite;
