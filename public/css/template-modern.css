@@ -408,6 +408,32 @@ body {
         max-width: 240px !important;
         font-size: 0.8rem !important;
     }
+    
+    /* Adjust left cards for smaller laptops */
+    .card-1 {
+        left: 2% !important;
+    }
+    
+    .card-3 {
+        left: 1% !important;
+    }
+    
+    .card-7 {
+        left: 3% !important;
+    }
+    
+    /* Adjust right cards for smaller laptops */
+    .card-2 {
+        right: 2% !important;
+    }
+    
+    .card-4 {
+        right: 1% !important;
+    }
+    
+    .card-6 {
+        right: 3% !important;
+    }
 }
 
 @media (max-width: 900px) {
@@ -449,24 +475,43 @@ body {
     margin-right: 0.6rem;
 }
 
-/* Clean separated positioning - right cards away from center */
+/* Clean separated positioning - cards positioned around center image */
 
-/* RIGHT COLUMN - Positioned away from center cards */
+/* LEFT COLUMN - Positioned on the left side */
+.card-1 {
+    top: 20%;
+    left: 5%;
+    animation: floatingCard1 3.2s ease-in-out infinite;
+}
+
+.card-3 {
+    top: 45%;
+    left: 2%;
+    animation: floatingCard3 3.6s ease-in-out infinite;
+}
+
+.card-7 {
+    top: 70%;
+    left: 8%;
+    animation: floatingCard7 3.9s ease-in-out infinite;
+}
+
+/* RIGHT COLUMN - Positioned away from center cards but still visible */
 .card-2 {
     top: 25%;
-    right: -15%;
+    right: 5%;
     animation: floatingCard2 3.5s ease-in-out infinite;
 }
 
 .card-4 {
     top: 50%;
-    right: -25%;
+    right: 2%;
     animation: floatingCard4 3.8s ease-in-out infinite;
 }
 
 .card-6 {
     top: 75%;
-    right: -15%;
+    right: 8%;
     animation: floatingCard6 3.3s ease-in-out infinite;
 }
 
@@ -486,6 +531,24 @@ body {
 }
 
 /* Individual card animations with different movements */
+@keyframes floatingCard1 {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    25% { transform: translateY(-15px) translateX(3px) rotate(1deg); }
+    65% { transform: translateY(-8px) translateX(-2px) rotate(-0.8deg); }
+}
+
+@keyframes floatingCard3 {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    30% { transform: translateY(-12px) translateX(4px) rotate(1.1deg); }
+    75% { transform: translateY(-9px) translateX(-3px) rotate(-0.9deg); }
+}
+
+@keyframes floatingCard7 {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    35% { transform: translateY(-16px) translateX(2px) rotate(-1.3deg); }
+    70% { transform: translateY(-7px) translateX(-4px) rotate(1.1deg); }
+}
+
 @keyframes floatingCard2 {
     0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
     30% { transform: translateY(-18px) translateX(-4px) rotate(-1deg); }
