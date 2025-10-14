@@ -449,38 +449,37 @@ body {
     margin-right: 0.6rem;
 }
 
-/* Simplified clean positioning - minimal overlap with image */
+/* Clean separated positioning - right cards away from center */
 
-/* RIGHT COLUMN - Simple vertical stack */
+/* RIGHT COLUMN - Positioned away from center cards */
 .card-2 {
-    top: 20%;
-    right: 15px;
+    top: 25%;
+    right: -15%;
     animation: floatingCard2 3.5s ease-in-out infinite;
 }
 
 .card-4 {
     top: 50%;
-    right: 15px;
+    right: -25%;
     animation: floatingCard4 3.8s ease-in-out infinite;
 }
 
 .card-6 {
-    top: 80%;
-    right: 15px;
+    top: 75%;
+    right: -15%;
     animation: floatingCard6 3.3s ease-in-out infinite;
 }
 
-/* TOP CENTER - Higher up to avoid image overlap */
+/* CENTER CARDS - Properly spaced from image */
 .card-5 {
-    top: -10%;
+    top: 5%;
     left: 50%;
     transform: translateX(-50%);
     animation: floatingCard5 4.2s ease-in-out infinite;
 }
 
-/* BOTTOM CENTER - Positioned within viewport for full visibility */
 .card-8 {
-    bottom: 10px;
+    bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
     animation: floatingCard8 3.7s ease-in-out infinite;
