@@ -979,6 +979,27 @@ body {
     align-items: center;
 }
 
+/* Mission Image */
+.about-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mission-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-medium);
+    transition: var(--animation-normal);
+}
+
+.mission-image:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-heavy);
+}
+
 .about-description {
     font-size: 1.1rem;
     color: var(--text-secondary);
@@ -1631,6 +1652,12 @@ body {
         grid-template-columns: 1fr;
         gap: 2rem;
         text-align: center;
+    }
+    
+    /* Mission image responsive */
+    .mission-image {
+        height: 280px;
+        margin-top: 2rem;
     }
     
     .about-image-grid {
