@@ -305,19 +305,19 @@ body {
     }
 }
 
-/* Floating cards - Original design restored */
+/* Floating cards - Green and white theme */
 .floating-card {
     position: absolute;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--primary-gradient);
     backdrop-filter: blur(20px);
     padding: 1.2rem 1.6rem;
     border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-medium);
+    box-shadow: 0 8px 30px rgba(46, 204, 113, 0.4);
     display: flex;
     align-items: center;
     gap: 0.7rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: white;
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -325,7 +325,7 @@ body {
     max-width: 350px;
     width: auto;
     line-height: 1.4;
-    border: 2px solid rgba(46, 204, 113, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     min-height: 70px;
 }
 
@@ -340,6 +340,8 @@ body {
     align-items: flex-start;
     line-height: 1.4;
     flex-wrap: wrap;
+    background: var(--primary-gradient);
+    color: white;
 }
 
 /* Allow text wrapping in center cards */
@@ -355,14 +357,16 @@ body {
 
 .floating-card:hover {
     transform: scale(1.05) translateY(-5px) !important;
-    box-shadow: var(--shadow-heavy);
+    box-shadow: 0 15px 40px rgba(46, 204, 113, 0.6);
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
 }
 
 .floating-card i {
     font-size: 1.1rem;
     min-width: 1.5rem;
-    color: var(--primary);
+    color: white;
     flex-shrink: 0;
+    opacity: 0.9;
 }
 
 /* Add subtle connecting lines for visual structure */
