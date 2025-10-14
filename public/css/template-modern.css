@@ -478,9 +478,9 @@ body {
     animation: floatingCard5 4.2s ease-in-out infinite;
 }
 
-/* BOTTOM CENTER - Lower down for better visibility */
+/* BOTTOM CENTER - Positioned within viewport for full visibility */
 .card-8 {
-    bottom: -15%;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     animation: floatingCard8 3.7s ease-in-out infinite;
