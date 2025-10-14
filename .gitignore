@@ -144,4 +144,7 @@ dist/
 *.log
 
 # Email testing files (if using Ethereal or similar)
-test-emails/public/images/hero-backgrounds/current-hero-image.png
+test-emails/
+
+# Large hero images (keep optimized versions only)
+public/images/hero-backgrounds/current-hero-image.png

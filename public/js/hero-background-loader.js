@@ -10,6 +10,12 @@ class HeroBackgroundLoader {
         this.supportedFormats = ['jpg', 'jpeg', 'png', 'webp'];
         this.fallbackImage = 'images/hero-background.svg';
         
+        // Priority paths - check optimized version first
+        this.priorityPaths = [
+            'images/hero-backgrounds/current-hero-image-optimized.jpg',
+            'images/hero-backgrounds/current-hero-image'
+        ];
+        
         this.init();
     }
 
@@ -27,7 +33,20 @@ class HeroBackgroundLoader {
     }
 
     async detectHeroImage() {
-        // Try each supported format
+        // First try priority paths (optimized versions)
+        for (const priorityPath of this.priorityPaths) {
+            try {
+                const exists = await this.checkImageExists(priorityPath);
+                if (exists) {
+                    return priorityPath;
+                }
+            } catch (error) {
+                // Continue to next priority path
+                continue;
+            }
+        }
+        
+        // Then try each supported format with base path
         for (const format of this.supportedFormats) {
             const imageUrl = `${this.imagePath}.${format}`;
             
