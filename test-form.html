@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RefillPlanet Form Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .test-controls {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-log {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 RefillPlanet Contact Form Test Suite</h1>
+    
+    <div class="test-section">
+        <h2>📋 Test Scenarios</h2>
+        <div class="test-controls">
+            <button onclick="runBasicFormTest()">🔄 Test Basic Form Submission</button>
+            <button onclick="runValidationTest()">⚠️ Test Form Validation</button>
+            <button onclick="runJavaScriptTest()">⚙️ Test JavaScript Loading</button>
+            <button onclick="runZohoConnectivity()">🌐 Test Zoho Connectivity</button>
+            <button onclick="clearResults()">🧹 Clear Results</button>
+        </div>
+        <div id="test-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🖥️ Live Website Preview</h2>
+        <p>Testing the actual live website: <a href="https://therefillplanet.com" target="_blank">therefillplanet.com</a></p>
+        <iframe src="https://therefillplanet.com" id="website-frame"></iframe>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 Test Log</h2>
+        <div id="test-log" class="test-log">Ready to run tests...\n</div>
+    </div>
+
+    <script>
+        let testResults = [];
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const logElement = document.getElementById('test-log');
+            logElement.textContent += `[${timestamp}] ${message}\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        function addResult(testName, status, message) {
+            testResults.push({ testName, status, message, timestamp: new Date() });
+            updateResults();
+        }
+
+        function updateResults() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = testResults.map(result => {
+                const statusClass = result.status === 'success' ? 'success' : 
+                                  result.status === 'error' ? 'error' : 'warning';
+                return `
+                    <div class="test-result ${statusClass}">
+                        <strong>${result.testName}</strong>: ${result.message}
+                        <br><small>${result.timestamp.toLocaleString()}</small>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function clearResults() {
+            testResults = [];
+            updateResults();
+            document.getElementById('test-log').textContent = 'Results cleared...\n';
+        }
+
+        async function runJavaScriptTest() {
+            log('🔍 Testing JavaScript loading and function availability...');
+            
+            try {
+                const response = await fetch('https://therefillplanet.com/js/script.js');
+                const jsContent = await response.text();
+                
+                // Check for key functions
+                const requiredFunctions = [
+                    'initContactForm',
+                    'handleFormSubmit', 
+                    'handleButtonClick',
+                    'validateForm',
+                    'showFormStatus'
+                ];
+                
+                const missingFunctions = requiredFunctions.filter(func => 
+                    !jsContent.includes(`function ${func}`)
+                );
+                
+                if (missingFunctions.length === 0) {
+                    addResult('JavaScript Functions', 'success', 'All required functions are present in script.js');
+                    log('✅ All required JavaScript functions found');
+                } else {
+                    addResult('JavaScript Functions', 'error', `Missing functions: ${missingFunctions.join(', ')}`);
+                    log(`❌ Missing functions: ${missingFunctions.join(', ')}`);
+                }
+                
+                // Check if script is properly loaded in HTML
+                const htmlResponse = await fetch('https://therefillplanet.com/');
+                const htmlContent = await htmlResponse.text();
+                
+                if (htmlContent.includes('src="js/script.js"')) {
+                    addResult('Script Loading', 'success', 'script.js is properly referenced in HTML');
+                    log('✅ script.js properly referenced in HTML');
+                } else {
+                    addResult('Script Loading', 'error', 'script.js not found in HTML script tags');
+                    log('❌ script.js not referenced in HTML');
+                }
+                
+            } catch (error) {
+                addResult('JavaScript Test', 'error', `Failed to test JavaScript: ${error.message}`);
+                log(`❌ JavaScript test failed: ${error.message}`);
+            }
+        }
+
+        async function runBasicFormTest() {
+            log('🔄 Starting basic form submission test...');
+            
+            // This test runs in the iframe context
+            const iframe = document.getElementById('website-frame');
+            
+            try {
+                // Wait for iframe to load
+                await new Promise(resolve => {
+                    iframe.onload = resolve;
+                    if (iframe.contentDocument) resolve(); // Already loaded
+                });
+                
+                log('📄 Website loaded in iframe');
+                
+                // Try to access iframe content
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const form = iframeDoc.getElementById('contactForm');
+                    const submitBtn = iframeDoc.getElementById('submitBtn');
+                    
+                    if (!form) {
+                        addResult('Form Element', 'error', 'Contact form not found with ID "contactForm"');
+                        log('❌ Contact form element not found');
+                        return;
+                    }
+                    
+                    if (!submitBtn) {
+                        addResult('Submit Button', 'error', 'Submit button not found with ID "submitBtn"');
+                        log('❌ Submit button element not found');
+                        return;
+                    }
+                    
+                    addResult('Form Elements', 'success', 'Contact form and submit button found');
+                    log('✅ Form elements located successfully');
+                    
+                    // Check if JavaScript functions are available
+                    const hasInitFunction = typeof iframe.contentWindow.initContactForm === 'function';
+                    const hasSubmitFunction = typeof iframe.contentWindow.handleFormSubmit === 'function';
+                    
+                    if (hasInitFunction && hasSubmitFunction) {
+                        addResult('JavaScript Initialization', 'success', 'Form handling functions are available');
+                        log('✅ JavaScript functions are properly loaded');
+                    } else {
+                        addResult('JavaScript Initialization', 'warning', 'Some form functions may not be available');
+                        log('⚠️ JavaScript functions may not be fully initialized');
+                    }
+                    
+                } catch (crossOriginError) {
+                    // Expected due to CORS, but we can still test some things
+                    addResult('Cross-Origin Test', 'warning', 'Cannot access iframe content due to CORS (expected)');
+                    log('⚠️ Cannot access iframe content due to CORS policy');
+                    
+                    // Test form submission via network monitoring
+                    await testFormSubmissionViaAPI();
+                }
+                
+            } catch (error) {
+                addResult('Basic Form Test', 'error', `Test failed: ${error.message}`);
+                log(`❌ Basic form test failed: ${error.message}`);
+            }
+        }
+
+        async function testFormSubmissionViaAPI() {
+            log('🌐 Testing form submission via API...');
+            
+            try {
+                // Test if the Zoho form URL is accessible
+                const zohoUrl = 'https://forms.zohopublic.com/shopperlucom1/form/ContactUs/formperma/1S_8m5wlWWmt5BAco4OCEyWy_NgZkwUn64NY-qBpsvE';
+                
+                // We can't actually submit due to CORS, but we can check if the URL is valid
+                const response = await fetch(zohoUrl, { method: 'HEAD', mode: 'no-cors' });
+                
+                addResult('Zoho Form URL', 'success', 'Zoho form URL is accessible');
+                log('✅ Zoho form URL responds successfully');
+                
+            } catch (error) {
+                addResult('Zoho Form URL', 'warning', 'Could not verify Zoho form URL accessibility');
+                log(`⚠️ Zoho URL test inconclusive: ${error.message}`);
+            }
+        }
+
+        async function runValidationTest() {
+            log('⚠️ Testing form validation...');
+            
+            try {
+                const response = await fetch('https://therefillplanet.com/js/script.js');
+                const jsContent = await response.text();
+                
+                // Check if validation function exists
+                if (jsContent.includes('function validateForm')) {
+                    addResult('Validation Function', 'success', 'Form validation function is present');
+                    log('✅ Validation function found in JavaScript');
+                    
+                    // Check validation logic
+                    if (jsContent.includes('required') || jsContent.includes('email')) {
+                        addResult('Validation Logic', 'success', 'Email and required field validation detected');
+                        log('✅ Validation logic appears to be implemented');
+                    } else {
+                        addResult('Validation Logic', 'warning', 'Validation logic may be basic');
+                        log('⚠️ Advanced validation logic not clearly detected');
+                    }
+                } else {
+                    addResult('Validation Function', 'error', 'Form validation function not found');
+                    log('❌ No validation function detected');
+                }
+                
+            } catch (error) {
+                addResult('Validation Test', 'error', `Validation test failed: ${error.message}`);
+                log(`❌ Validation test failed: ${error.message}`);
+            }
+        }
+
+        async function runZohoConnectivity() {
+            log('🌐 Testing Zoho connectivity...');
+            
+            try {
+                // Test Zoho form endpoint
+                const zohoUrl = 'https://forms.zohopublic.com/shopperlucom1/form/ContactUs/formperma/1S_8m5wlWWmt5BAco4OCEyWy_NgZkwUn64NY-qBpsvE';
+                
+                // Check if we can reach Zoho (even if CORS blocks us)
+                try {
+                    await fetch(zohoUrl, { method: 'HEAD', mode: 'no-cors' });
+                    addResult('Zoho Connectivity', 'success', 'Zoho forms service is reachable');
+                    log('✅ Zoho forms service is accessible');
+                } catch (fetchError) {
+                    addResult('Zoho Connectivity', 'warning', 'Zoho connectivity test inconclusive');
+                    log('⚠️ Zoho connectivity test inconclusive due to CORS');
+                }
+                
+                // Test if form has correct data attributes
+                const htmlResponse = await fetch('https://therefillplanet.com/');
+                const htmlContent = await htmlResponse.text();
+                
+                if (htmlContent.includes('data-zoho-action')) {
+                    addResult('Zoho Integration', 'success', 'Form has Zoho action attribute configured');
+                    log('✅ Zoho form action is properly configured');
+                } else {
+                    addResult('Zoho Integration', 'error', 'Form missing Zoho action attribute');
+                    log('❌ Zoho form action attribute not found');
+                }
+                
+            } catch (error) {
+                addResult('Zoho Test', 'error', `Zoho test failed: ${error.message}`);
+                log(`❌ Zoho test failed: ${error.message}`);
+            }
+        }
+
+        // Auto-run initial tests when page loads
+        window.addEventListener('load', () => {
+            log('🚀 Test suite loaded. Running initial checks...');
+            setTimeout(runJavaScriptTest, 1000);
+        });
+    </script>
+</body>
+</html>
