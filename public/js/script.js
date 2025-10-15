@@ -71,72 +71,155 @@ function initSmoothScrolling() {
 }
 
 // Contact Form Handling
-function initContactForm() {
-    const contactForm = document.getElementById('contactForm');
+function handleButtonClick() {
+    console.log('Send Message button clicked!');
     
-    if (contactForm) {
-        // Remove any existing event listeners
-        contactForm.removeEventListener('submit', handleFormSubmit);
-        
-        // Completely remove any action attribute that might cause redirects
-        contactForm.removeAttribute('action');
-        contactForm.removeAttribute('method');
-        contactForm.removeAttribute('target');
-        
-        // Add the event listener with capture phase to catch it early
-        contactForm.addEventListener('submit', handleFormSubmit, { capture: true, passive: false });
-        
-        // Also add a backup event listener
-        const submitBtn = document.getElementById('submitBtn');
-        if (submitBtn) {
-            submitBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                handleFormSubmit(e);
-                return false;
-            });
-        }
-        
-        console.log('Contact form initialized with AJAX submission');
+    const form = document.getElementById('contactForm');
+    if (!form) {
+        console.error('Contact form not found!');
+        return;
     }
+    
+    // Create a fake event to pass to handleFormSubmit
+    const fakeEvent = {
+        preventDefault: () => console.log('preventDefault called'),
+        stopPropagation: () => console.log('stopPropagation called'),
+        stopImmediatePropagation: () => console.log('stopImmediatePropagation called'),
+        target: form
+    };
+    
+    console.log('Calling handleFormSubmit...');
+    handleFormSubmit(fakeEvent);
+}
+
+function initContactForm() {
+    console.log('Initializing contact form...');
+    
+    // Get form and button elements
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    if (!form) {
+        console.error('Contact form not found during initialization!');
+        return;
+    }
+    
+    if (!submitBtn) {
+        console.error('Submit button not found during initialization!');
+        return;
+    }
+    
+    console.log('Form and button found, adding event listeners...');
+    
+    // Add click listener to the button
+    submitBtn.addEventListener('click', function(e) {
+        console.log('Button click event detected!');
+        e.preventDefault();
+        e.stopPropagation();
+        handleButtonClick();
+    });
+    
+    // Also prevent form submission just in case
+    form.addEventListener('submit', function(e) {
+        console.log('Form submit event detected (prevented)');
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        handleFormSubmit(e);
+    });
+    
+    // Global document-level event prevention for any form submissions
+    document.addEventListener('submit', function(e) {
+        if (e.target && e.target.id === 'contactForm') {
+            console.log('Global form submit prevention activated');
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            handleFormSubmit(e);
+        }
+    });
+    
+    console.log('Contact form initialization complete!');
+}
+
+// Handle button click
+function handleButtonClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Submit button clicked!');
+    
+    // Create a fake form event
+    const form = document.getElementById('contactForm');
+    const fakeEvent = {
+        preventDefault: () => {},
+        stopPropagation: () => {},
+        stopImmediatePropagation: () => {},
+        target: form
+    };
+    
+    handleFormSubmit(fakeEvent);
 }
 
 async function handleFormSubmit(e) {
+    console.log('handleFormSubmit called!', e);
+    
     // Completely prevent any form submission
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
+    if (e && e.preventDefault) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+    }
     
     console.log('Form submission intercepted - processing with AJAX');
     
-    const form = e.target.tagName === 'FORM' ? e.target : document.getElementById('contactForm');
-    const formData = new FormData(form);
+    const form = document.getElementById('contactForm');
     const statusDiv = document.getElementById('form-status');
     const submitBtn = document.getElementById('submitBtn');
-    const btnText = submitBtn.querySelector('.btn-text');
-    const btnLoading = submitBtn.querySelector('.btn-loading');
+    const btnText = submitBtn?.querySelector('.btn-text');
+    const btnLoading = submitBtn?.querySelector('.btn-loading');
+    
+    if (!form) {
+        console.error('Contact form not found!');
+        return false;
+    }
+    
+    const formData = new FormData(form);
     
     // Validate form data
     const data = Object.fromEntries(formData.entries());
+    console.log('Form data:', data);
+    
     if (!validateForm(data)) {
+        console.log('Form validation failed');
         return false;
     }
     
     // Show loading status
+    console.log('Showing loading status...');
     showFormStatus('loading', 'Sending your message...');
-    submitBtn.disabled = true;
-    if (btnText) btnText.style.display = 'none';
-    if (btnLoading) btnLoading.style.display = 'inline-flex';
+    
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        if (btnText) btnText.style.display = 'none';
+        if (btnLoading) btnLoading.style.display = 'inline-flex';
+    }
     
     try {
         // Get Zoho URL from data attribute
         const zohoUrl = form.getAttribute('data-zoho-action');
+        console.log('Zoho URL:', zohoUrl);
+        
+        if (!zohoUrl) {
+            throw new Error('Zoho form URL not found');
+        }
         
         // Use a simple fetch approach
         const formParams = new URLSearchParams();
         for (const [key, value] of formData.entries()) {
             formParams.append(key, value);
         }
+        
+        console.log('Submitting to Zoho...', formParams.toString());
         
         // Submit to Zoho in background
         fetch(zohoUrl, {
@@ -148,18 +231,21 @@ async function handleFormSubmit(e) {
             }
         }).catch(() => {
             // Expected to fail due to CORS, but form data is sent
-            console.log('Form data submitted to Zoho');
+            console.log('Form data submitted to Zoho (CORS expected)');
         });
         
         // Show success message
         setTimeout(() => {
+            console.log('Showing success message...');
             showFormStatus('success', '🎉 Thank you! Your message has been sent successfully. We will respond within 24 hours.');
             form.reset();
             
             // Reset button state
-            submitBtn.disabled = false;
-            if (btnText) btnText.style.display = 'inline-flex';
-            if (btnLoading) btnLoading.style.display = 'none';
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                if (btnText) btnText.style.display = 'inline-flex';
+                if (btnLoading) btnLoading.style.display = 'none';
+            }
             
             // Auto-hide success message after 8 seconds
             setTimeout(() => {
@@ -172,9 +258,11 @@ async function handleFormSubmit(e) {
         showFormStatus('error', 'There was an error sending your message. Please try again or contact us directly at contact@therefillplanet.com');
         
         // Reset button state
-        submitBtn.disabled = false;
-        if (btnText) btnText.style.display = 'inline-flex';
-        if (btnLoading) btnLoading.style.display = 'none';
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            if (btnText) btnText.style.display = 'inline-flex';
+            if (btnLoading) btnLoading.style.display = 'none';
+        }
     }
     
     // Absolutely prevent any default form behavior
