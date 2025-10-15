@@ -261,20 +261,20 @@ async function handleFormSubmit(e) {
 function validateForm(data) {
     const errors = [];
     
-    // Required fields validation - updated to match Zoho field names
-    if (!data.Name || data.Name.trim().length < 2) {
+    // Required fields validation - using standard field names
+    if (!data.name || data.name.trim().length < 2) {
         errors.push('Please enter a valid name (at least 2 characters).');
     }
     
-    if (!data.Email || !isValidEmail(data.Email)) {
+    if (!data.email || !isValidEmail(data.email)) {
         errors.push('Please enter a valid email address.');
     }
     
-    if (!data.SingleLine || data.SingleLine.trim().length < 3) {
+    if (!data.subject || data.subject.trim().length < 3) {
         errors.push('Please enter a subject (at least 3 characters).');
     }
     
-    if (!data.MultiLine || data.MultiLine.trim().length < 10) {
+    if (!data.message || data.message.trim().length < 10) {
         errors.push('Please enter a message (at least 10 characters).');
     }
     
