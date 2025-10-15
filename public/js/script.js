@@ -71,6 +71,9 @@ async function handleFormSubmit(e) {
     const form = e.target;
     const formData = new FormData(form);
     const statusDiv = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
     
     // Validate form data
     const data = Object.fromEntries(formData.entries());
@@ -80,29 +83,76 @@ async function handleFormSubmit(e) {
     
     // Show loading status
     showFormStatus('loading', 'Sending your message...');
+    submitBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline-flex';
     
     try {
-        // Since the form action is already set to Zoho, let the browser handle the submission naturally
-        // The form will redirect to Zoho's success page after submission
-        showFormStatus('success', 'Thank you! Your message has been sent. We will respond within 24 hours.');
+        // Submit to Zoho Forms using fetch with form data
+        const zohoUrl = form.getAttribute('data-zoho-action');
         
-        // Let the form submit naturally to Zoho
-        // The preventDefault() above was just to show the success message
-        // Now we'll submit the form after a brief delay
+        // Create a hidden iframe to submit the form (to avoid CORS issues)
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.name = 'zoho-submit-frame';
+        document.body.appendChild(iframe);
+        
+        // Create a temporary form to submit to Zoho
+        const tempForm = document.createElement('form');
+        tempForm.method = 'POST';
+        tempForm.action = zohoUrl;
+        tempForm.target = 'zoho-submit-frame';
+        tempForm.style.display = 'none';
+        
+        // Copy form data to temp form
+        for (const [key, value] of formData.entries()) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            tempForm.appendChild(input);
+        }
+        
+        document.body.appendChild(tempForm);
+        
+        // Submit the form to Zoho in the background
+        tempForm.submit();
+        
+        // Show success message immediately (since we're submitting in background)
         setTimeout(() => {
-            form.submit();
-        }, 1500);
+            showFormStatus('success', 'Thank you! Your message has been sent successfully. We will respond within 24 hours.');
+            form.reset();
+            
+            // Reset button state
+            submitBtn.disabled = false;
+            btnText.style.display = 'inline-flex';
+            btnLoading.style.display = 'none';
+            
+            // Clean up
+            document.body.removeChild(tempForm);
+            document.body.removeChild(iframe);
+            
+            // Auto-hide success message after 5 seconds
+            setTimeout(() => {
+                hideFormStatus();
+            }, 5000);
+        }, 1000);
         
     } catch (error) {
         console.error('Form submission error:', error);
-        showFormStatus('error', 'Network error. Please check your connection and try again.');
+        showFormStatus('error', 'There was an error sending your message. Please try again or contact us directly at contact@therefillplanet.com');
+        
+        // Reset button state
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline-flex';
+        btnLoading.style.display = 'none';
     }
 }
 
 function validateForm(data) {
     const errors = [];
     
-    // Required fields validation
+    // Required fields validation - updated to match Zoho field names
     if (!data.Name || data.Name.trim().length < 2) {
         errors.push('Please enter a valid name (at least 2 characters).');
     }
@@ -111,17 +161,12 @@ function validateForm(data) {
         errors.push('Please enter a valid email address.');
     }
     
-    if (!data.Subject || data.Subject.trim().length < 3) {
+    if (!data.SingleLine || data.SingleLine.trim().length < 3) {
         errors.push('Please enter a subject (at least 3 characters).');
     }
     
-    if (!data.Message || data.Message.trim().length < 10) {
+    if (!data.MultiLine || data.MultiLine.trim().length < 10) {
         errors.push('Please enter a message (at least 10 characters).');
-    }
-    
-    // Phone validation (if provided)
-    if (data.phone && data.phone.trim() !== '' && !isValidPhone(data.phone)) {
-        errors.push('Please enter a valid phone number.');
     }
     
     if (errors.length > 0) {
@@ -200,6 +245,13 @@ function showFormStatus(type, message) {
                 statusDiv.classList.remove('show');
             }, 5000);
         }
+    }
+}
+
+function hideFormStatus() {
+    const statusDiv = document.getElementById('form-status');
+    if (statusDiv) {
+        statusDiv.classList.remove('show');
     }
 }
 
