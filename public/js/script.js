@@ -71,26 +71,6 @@ function initSmoothScrolling() {
 }
 
 // Contact Form Handling
-function handleButtonClick() {
-    console.log('Send Message button clicked!');
-    
-    const form = document.getElementById('contactForm');
-    if (!form) {
-        console.error('Contact form not found!');
-        return;
-    }
-    
-    // Create a fake event to pass to handleFormSubmit
-    const fakeEvent = {
-        preventDefault: () => console.log('preventDefault called'),
-        stopPropagation: () => console.log('stopPropagation called'),
-        stopImmediatePropagation: () => console.log('stopImmediatePropagation called'),
-        target: form
-    };
-    
-    console.log('Calling handleFormSubmit...');
-    handleFormSubmit(fakeEvent);
-}
 
 function initContactForm() {
     console.log('Initializing contact form...');
@@ -116,7 +96,7 @@ function initContactForm() {
         console.log('Button click event detected!');
         e.preventDefault();
         e.stopPropagation();
-        handleButtonClick();
+        handleButtonClick(e);
     });
     
     // Also prevent form submission just in case
@@ -144,19 +124,28 @@ function initContactForm() {
 
 // Handle button click
 function handleButtonClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('Submit button clicked!');
+    console.log('Send Message button clicked!');
     
-    // Create a fake form event
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
     const form = document.getElementById('contactForm');
+    if (!form) {
+        console.error('Contact form not found!');
+        return;
+    }
+    
+    // Create a fake form event to pass to handleFormSubmit
     const fakeEvent = {
-        preventDefault: () => {},
-        stopPropagation: () => {},
-        stopImmediatePropagation: () => {},
+        preventDefault: () => console.log('preventDefault called'),
+        stopPropagation: () => console.log('stopPropagation called'),
+        stopImmediatePropagation: () => console.log('stopImmediatePropagation called'),
         target: form
     };
     
+    console.log('Calling handleFormSubmit...');
     handleFormSubmit(fakeEvent);
 }
 
