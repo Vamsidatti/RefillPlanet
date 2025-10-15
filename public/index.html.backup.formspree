@@ -583,12 +583,12 @@
                         </div>
                         <div class="contact-details">
                             <h4>Email Us</h4>
-                            <p>contact@therefillplanet.com</p>
+                            <p>info@therefillplanet.com</p>
                         </div>
                     </div>
                 </div>
                 
-                <form action="https://forms.zohopublic.com/shopperlucom1/form/ContactUs/formperma/1S_8m5wlWWmt5BAco4OCEyWy_NgZkwUn64NY-qBpsvE" method="POST" class="contact-form-modern" id="contactForm">
+                <form action="https://formspree.io/f/xdkogbaw" method="POST" class="contact-form-modern" id="contactForm">
                     <div id="form-status" class="form-status hidden"></div>
                     
                     <div class="form-row">

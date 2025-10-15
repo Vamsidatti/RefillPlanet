@@ -82,23 +82,16 @@ async function handleFormSubmit(e) {
     showFormStatus('loading', 'Sending your message...');
     
     try {
-        // Using Zoho Forms webhook URL - you'll need to replace this with your actual Zoho Forms URL
-        const zohoFormURL = 'https://forms.zoho.com/therefillplanet/form/ContactForm/formperma/YOUR_FORM_LINK_HERE';
+        // Since the form action is already set to Zoho, let the browser handle the submission naturally
+        // The form will redirect to Zoho's success page after submission
+        showFormStatus('success', 'Thank you! Your message has been sent. We will respond within 24 hours.');
         
-        // For now, let's simulate the email sending and provide setup instructions
+        // Let the form submit naturally to Zoho
+        // The preventDefault() above was just to show the success message
+        // Now we'll submit the form after a brief delay
         setTimeout(() => {
-            showFormStatus('success', 'Message received! We will set up Zoho email integration next.');
-            form.reset();
-        }, 2000);
-        
-        // Store the form data temporarily (you can remove this after Zoho setup)
-        console.log('Form data to be sent via Zoho:', {
-            name: data.Name,
-            email: data.Email,
-            subject: data.Subject,
-            message: data.Message,
-            timestamp: new Date().toISOString()
-        });
+            form.submit();
+        }, 1500);
         
     } catch (error) {
         console.error('Form submission error:', error);
