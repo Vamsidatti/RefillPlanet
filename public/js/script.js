@@ -82,25 +82,24 @@ async function handleFormSubmit(e) {
     showFormStatus('loading', 'Sending your message...');
     
     try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
+        // Using Zoho Forms webhook URL - you'll need to replace this with your actual Zoho Forms URL
+        const zohoFormURL = 'https://forms.zoho.com/therefillplanet/form/ContactForm/formperma/YOUR_FORM_LINK_HERE';
+        
+        // For now, let's simulate the email sending and provide setup instructions
+        setTimeout(() => {
+            showFormStatus('success', 'Message received! We will set up Zoho email integration next.');
+            form.reset();
+        }, 2000);
+        
+        // Store the form data temporarily (you can remove this after Zoho setup)
+        console.log('Form data to be sent via Zoho:', {
+            name: data.Name,
+            email: data.Email,
+            subject: data.Subject,
+            message: data.Message,
+            timestamp: new Date().toISOString()
         });
         
-        if (response.ok) {
-            showFormStatus('success', 'Thank you! Your message has been sent successfully.');
-            form.reset();
-        } else {
-            const data = await response.json();
-            if (data.errors) {
-                showFormStatus('error', 'Please fix the following errors: ' + data.errors.map(error => error.message).join(', '));
-            } else {
-                showFormStatus('error', 'Failed to send message. Please try again.');
-            }
-        }
     } catch (error) {
         console.error('Form submission error:', error);
         showFormStatus('error', 'Network error. Please check your connection and try again.');
@@ -111,19 +110,19 @@ function validateForm(data) {
     const errors = [];
     
     // Required fields validation
-    if (!data.name || data.name.trim().length < 2) {
+    if (!data.Name || data.Name.trim().length < 2) {
         errors.push('Please enter a valid name (at least 2 characters).');
     }
     
-    if (!data.email || !isValidEmail(data.email)) {
+    if (!data.Email || !isValidEmail(data.Email)) {
         errors.push('Please enter a valid email address.');
     }
     
-    if (!data.subject || data.subject.trim().length < 3) {
+    if (!data.Subject || data.Subject.trim().length < 3) {
         errors.push('Please enter a subject (at least 3 characters).');
     }
     
-    if (!data.message || data.message.trim().length < 10) {
+    if (!data.Message || data.Message.trim().length < 10) {
         errors.push('Please enter a message (at least 10 characters).');
     }
     
