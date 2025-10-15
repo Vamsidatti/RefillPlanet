@@ -194,53 +194,48 @@ async function handleFormSubmit(e) {
     }
     
     try {
-        // Get Zoho URL from data attribute
-        const zohoUrl = form.getAttribute('data-zoho-action');
-        console.log('Zoho URL:', zohoUrl);
-        
-        if (!zohoUrl) {
-            throw new Error('Zoho form URL not found');
-        }
-        
-        // Use a simple fetch approach
+        // Use a simple fetch approach to our own email server
         const formParams = new URLSearchParams();
         for (const [key, value] of formData.entries()) {
             formParams.append(key, value);
         }
         
-        console.log('Submitting to Zoho...', formParams.toString());
+        console.log('Submitting to our email server...', formParams.toString());
         
-        // Submit to Zoho in background
-        fetch(zohoUrl, {
+        // Submit to our own email server
+        const response = await fetch('/contact', {
             method: 'POST',
-            mode: 'no-cors',
-            body: formParams,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-            }
-        }).catch(() => {
-            // Expected to fail due to CORS, but form data is sent
-            console.log('Form data submitted to Zoho (CORS expected)');
+            },
+            body: formParams
         });
         
-        // Show success message
-        setTimeout(() => {
-            console.log('Showing success message...');
-            showFormStatus('success', '🎉 Thank you! Your message has been sent successfully. We will respond within 24 hours.');
-            form.reset();
-            
-            // Reset button state
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                if (btnText) btnText.style.display = 'inline-flex';
-                if (btnLoading) btnLoading.style.display = 'none';
-            }
-            
-            // Auto-hide success message after 8 seconds
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log('Email sent successfully via our server');
+            // Show success message
             setTimeout(() => {
-                hideFormStatus();
-            }, 8000);
-        }, 1500);
+                console.log('Showing success message...');
+                showFormStatus('success', '🎉 Thank you! Your message has been sent successfully. We will respond within 24 hours.');
+                form.reset();
+                
+                // Reset button state
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    if (btnText) btnText.style.display = 'inline-flex';
+                    if (btnLoading) btnLoading.style.display = 'none';
+                }
+                
+                // Auto-hide success message after 8 seconds
+                setTimeout(() => {
+                    hideFormStatus();
+                }, 8000);
+            }, 1500);
+        } else {
+            throw new Error(result.error || 'Failed to send email');
+        }
         
     } catch (error) {
         console.error('Form submission error:', error);
