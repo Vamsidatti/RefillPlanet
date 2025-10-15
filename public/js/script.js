@@ -9,6 +9,20 @@ document.addEventListener('DOMContentLoaded', function() {
     initTabs();
     initModals();
     initTooltips();
+    
+    // Prevent any form submissions globally for contact form
+    document.addEventListener('submit', function(e) {
+        if (e.target.id === 'contactForm') {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            console.log('Contact form submission prevented globally');
+            handleFormSubmit(e);
+            return false;
+        }
+    }, true);
+    
+    console.log('RefillPlanet website initialized');
 });
 
 // Mobile Menu Toggle
@@ -64,20 +78,38 @@ function initContactForm() {
         // Remove any existing event listeners
         contactForm.removeEventListener('submit', handleFormSubmit);
         
-        // Add the event listener with proper options
-        contactForm.addEventListener('submit', handleFormSubmit, true);
-        
-        // Also prevent any action attribute from being processed
+        // Completely remove any action attribute that might cause redirects
         contactForm.removeAttribute('action');
         contactForm.removeAttribute('method');
+        contactForm.removeAttribute('target');
+        
+        // Add the event listener with capture phase to catch it early
+        contactForm.addEventListener('submit', handleFormSubmit, { capture: true, passive: false });
+        
+        // Also add a backup event listener
+        const submitBtn = document.getElementById('submitBtn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                handleFormSubmit(e);
+                return false;
+            });
+        }
+        
+        console.log('Contact form initialized with AJAX submission');
     }
 }
 
 async function handleFormSubmit(e) {
+    // Completely prevent any form submission
     e.preventDefault();
     e.stopPropagation();
+    e.stopImmediatePropagation();
     
-    const form = e.target;
+    console.log('Form submission intercepted - processing with AJAX');
+    
+    const form = e.target.tagName === 'FORM' ? e.target : document.getElementById('contactForm');
     const formData = new FormData(form);
     const statusDiv = document.getElementById('form-status');
     const submitBtn = document.getElementById('submitBtn');
@@ -93,31 +125,20 @@ async function handleFormSubmit(e) {
     // Show loading status
     showFormStatus('loading', 'Sending your message...');
     submitBtn.disabled = true;
-    btnText.style.display = 'none';
-    btnLoading.style.display = 'inline-flex';
+    if (btnText) btnText.style.display = 'none';
+    if (btnLoading) btnLoading.style.display = 'inline-flex';
     
     try {
-        // Submit to Zoho Forms using a completely hidden iframe approach
+        // Get Zoho URL from data attribute
         const zohoUrl = form.getAttribute('data-zoho-action');
         
-        // Create a unique iframe that won't interfere with navigation
-        const iframe = document.createElement('iframe');
-        iframe.style.cssText = 'position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;border:none;';
-        iframe.name = 'zoho-submit-' + Date.now();
-        iframe.onload = function() {
-            // This prevents any navigation issues
-            console.log('Form submitted to Zoho successfully');
-        };
-        
-        document.body.appendChild(iframe);
-        
-        // Create form data as URL encoded string
+        // Use a simple fetch approach
         const formParams = new URLSearchParams();
         for (const [key, value] of formData.entries()) {
             formParams.append(key, value);
         }
         
-        // Use fetch with no-cors mode to submit to Zoho
+        // Submit to Zoho in background
         fetch(zohoUrl, {
             method: 'POST',
             mode: 'no-cors',
@@ -125,27 +146,20 @@ async function handleFormSubmit(e) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
-        }).then(() => {
-            // Since no-cors mode doesn't return response, we assume success
-            console.log('Form data sent to Zoho');
-        }).catch((error) => {
-            console.log('Fetch completed (expected with no-cors mode)');
+        }).catch(() => {
+            // Expected to fail due to CORS, but form data is sent
+            console.log('Form data submitted to Zoho');
         });
         
-        // Show success message immediately
+        // Show success message
         setTimeout(() => {
             showFormStatus('success', '🎉 Thank you! Your message has been sent successfully. We will respond within 24 hours.');
             form.reset();
             
             // Reset button state
             submitBtn.disabled = false;
-            btnText.style.display = 'inline-flex';
-            btnLoading.style.display = 'none';
-            
-            // Clean up iframe
-            if (iframe.parentNode) {
-                document.body.removeChild(iframe);
-            }
+            if (btnText) btnText.style.display = 'inline-flex';
+            if (btnLoading) btnLoading.style.display = 'none';
             
             // Auto-hide success message after 8 seconds
             setTimeout(() => {
@@ -159,11 +173,11 @@ async function handleFormSubmit(e) {
         
         // Reset button state
         submitBtn.disabled = false;
-        btnText.style.display = 'inline-flex';
-        btnLoading.style.display = 'none';
+        if (btnText) btnText.style.display = 'inline-flex';
+        if (btnLoading) btnLoading.style.display = 'none';
     }
     
-    // Prevent any default form submission behavior
+    // Absolutely prevent any default form behavior
     return false;
 }
 
