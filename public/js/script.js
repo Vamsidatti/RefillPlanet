@@ -345,13 +345,21 @@ function hideAlert() {
 function showFormStatus(type, message) {
     const statusDiv = document.getElementById('form-status');
     if (statusDiv) {
+        // Remove hidden class and set content
+        statusDiv.classList.remove('hidden');
         statusDiv.textContent = message;
-        statusDiv.className = `form-status ${type} show`;
+        statusDiv.className = `form-status ${type}`;
+        
+        // Force reflow to ensure the element is visible before showing
+        statusDiv.offsetHeight;
+        
+        // Add show class for animation
+        statusDiv.classList.add('show');
         
         // Auto-hide success and error messages after 5 seconds
         if (type !== 'loading') {
             setTimeout(() => {
-                statusDiv.classList.remove('show');
+                hideFormStatus();
             }, 5000);
         }
     }
@@ -361,6 +369,13 @@ function hideFormStatus() {
     const statusDiv = document.getElementById('form-status');
     if (statusDiv) {
         statusDiv.classList.remove('show');
+        
+        // Ensure complete cleanup after animation
+        setTimeout(() => {
+            statusDiv.classList.remove('success', 'error', 'loading');
+            statusDiv.classList.add('hidden');
+            statusDiv.textContent = '';
+        }, 400); // Match the CSS transition duration
     }
 }
 
