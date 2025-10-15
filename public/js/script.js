@@ -70,39 +70,40 @@ async function handleFormSubmit(e) {
     
     const form = e.target;
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    const statusDiv = document.getElementById('form-status');
     
     // Validate form data
+    const data = Object.fromEntries(formData.entries());
     if (!validateForm(data)) {
         return;
     }
     
-    // Show loading overlay
-    showLoadingOverlay();
+    // Show loading status
+    showFormStatus('loading', 'Sending your message...');
     
     try {
-        const response = await fetch('/api/contact', {
+        const response = await fetch(form.action, {
             method: 'POST',
+            body: formData,
             headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
+                'Accept': 'application/json'
+            }
         });
         
-        const result = await response.json();
-        
-        hideLoadingOverlay();
-        
         if (response.ok) {
-            showAlert('success', 'Thank you! Your message has been sent successfully.');
+            showFormStatus('success', 'Thank you! Your message has been sent successfully.');
             form.reset();
         } else {
-            showAlert('error', result.message || 'Failed to send message. Please try again.');
+            const data = await response.json();
+            if (data.errors) {
+                showFormStatus('error', 'Please fix the following errors: ' + data.errors.map(error => error.message).join(', '));
+            } else {
+                showFormStatus('error', 'Failed to send message. Please try again.');
+            }
         }
     } catch (error) {
-        hideLoadingOverlay();
         console.error('Form submission error:', error);
-        showAlert('error', 'Network error. Please check your connection and try again.');
+        showFormStatus('error', 'Network error. Please check your connection and try again.');
     }
 }
 
@@ -132,7 +133,7 @@ function validateForm(data) {
     }
     
     if (errors.length > 0) {
-        showAlert('error', errors.join(' '));
+        showFormStatus('error', errors.join(' '));
         return false;
     }
     
@@ -192,6 +193,22 @@ function showAlert(type, message) {
 function hideAlert() {
     const alertElement = document.getElementById('messageAlert');
     alertElement.classList.remove('show');
+}
+
+// Form Status Functions
+function showFormStatus(type, message) {
+    const statusDiv = document.getElementById('form-status');
+    if (statusDiv) {
+        statusDiv.textContent = message;
+        statusDiv.className = `form-status ${type} show`;
+        
+        // Auto-hide success and error messages after 5 seconds
+        if (type !== 'loading') {
+            setTimeout(() => {
+                statusDiv.classList.remove('show');
+            }, 5000);
+        }
+    }
 }
 
 // Scroll Animations
