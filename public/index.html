@@ -732,23 +732,38 @@
                     <div style="
                         background: linear-gradient(135deg, #27ae60, #2ecc71);
                         color: white;
-                        padding: 20px;
-                        border-radius: 10px;
+                        padding: 40px;
+                        border-radius: 15px;
                         text-align: center;
                         margin: 20px auto;
                         max-width: 600px;
-                        box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
-                        font-size: 16px;
-                        font-weight: 500;
+                        box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4);
+                        font-family: 'Arial', sans-serif;
                         position: fixed;
                         top: 20px;
                         left: 50%;
                         transform: translateX(-50%);
                         z-index: 1000;
                         transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+                        animation: successPulse 2s ease-in-out;
                     ">
-                        ✅ <strong>Success!</strong> Your message has been sent successfully. We'll get back to you soon!
+                        <div style="font-size: 48px; margin-bottom: 20px;">✅</div>
+                        <h2 style="margin: 0 0 15px 0; font-size: 28px; font-weight: 600;">Message Sent Successfully!</h2>
+                        <p style="margin: 0 0 20px 0; font-size: 18px; line-height: 1.6;">
+                            Thank you for reaching out to RefillPlanet. Your message has been delivered to our team successfully.
+                        </p>
+                        <p style="margin: 0; font-size: 16px; opacity: 0.9;">
+                            We'll get back to you within 24 hours. Keep making a difference! 🌱
+                        </p>
                     </div>
+                    
+                    <style>
+                        @keyframes successPulse {
+                            0% { transform: translateX(-50%) scale(0.9); opacity: 0; }
+                            50% { transform: translateX(-50%) scale(1.02); }
+                            100% { transform: translateX(-50%) scale(1); opacity: 1; }
+                        }
+                    </style>
                 `;
                 
                 // Insert at the top of the page
