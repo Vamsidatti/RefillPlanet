@@ -722,6 +722,55 @@
             });
         })();
 
+        // Add form submission feedback
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.contact-form-modern');
+            const submitBtn = document.querySelector('.btn-full');
+            const btnText = submitBtn.querySelector('.btn-text');
+            
+            if (form && submitBtn && btnText) {
+                form.addEventListener('submit', function(e) {
+                    // Show immediate feedback
+                    submitBtn.disabled = true;
+                    btnText.textContent = 'Sending...';
+                    submitBtn.style.opacity = '0.7';
+                    
+                    // Show a loading message
+                    const loadingDiv = document.createElement('div');
+                    loadingDiv.innerHTML = `
+                        <div style="
+                            background: linear-gradient(135deg, #3498db, #2980b9);
+                            color: white;
+                            padding: 15px 25px;
+                            border-radius: 8px;
+                            text-align: center;
+                            position: fixed;
+                            top: 20px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            z-index: 10000;
+                            font-size: 16px;
+                            font-weight: 600;
+                            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                            border: 2px solid rgba(255, 255, 255, 0.2);
+                            max-width: 90%;
+                            width: auto;
+                            min-width: 320px;
+                        ">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                <span style="font-size: 20px;">⏳</span>
+                                <span>Sending your message... This may take a moment.</span>
+                            </div>
+                        </div>
+                    `;
+                    document.body.insertBefore(loadingDiv, document.body.firstChild);
+                    
+                    // Don't prevent default - let the form submit normally
+                });
+            }
+        });
+
         // Handle success message from FormSubmit redirect
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
