@@ -726,23 +726,110 @@
         (function() {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('message') === 'sent') {
-                // Show success message
-                const formStatus = document.getElementById('form-status');
-                if (formStatus) {
-                    formStatus.className = 'form-status success';
-                    formStatus.innerHTML = '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
-                    formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+                // Show success message at top of page
+                showSuccessMessage();
                 
                 // Clean up URL (remove the parameter)
                 const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
                 window.history.replaceState({}, document.title, cleanUrl);
+            }
+            
+            function showSuccessMessage() {
+                // Create success banner at top of page
+                const successBanner = document.createElement('div');
+                successBanner.className = 'success-banner';
+                successBanner.innerHTML = `
+                    <div class="success-content">
+                        <span class="success-icon">✅</span>
+                        <span class="success-text">Thank you! Your message has been sent successfully. We'll get back to you soon.</span>
+                        <button class="success-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                    </div>
+                `;
+                
+                // Insert at top of body
+                document.body.insertBefore(successBanner, document.body.firstChild);
+                
+                // Auto-hide after 8 seconds
+                setTimeout(() => {
+                    if (successBanner.parentElement) {
+                        successBanner.style.opacity = '0';
+                        setTimeout(() => successBanner.remove(), 500);
+                    }
+                }, 8000);
             }
         })();
     </script>
     
     <style>
         .hidden { display: none; }
+        
+        /* Success Banner Styles */
+        .success-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            z-index: 10000;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+            transition: opacity 0.5s ease;
+            animation: slideDownSuccess 0.5s ease-out;
+        }
+        
+        .success-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .success-icon {
+            font-size: 24px;
+            margin-right: 12px;
+        }
+        
+        .success-text {
+            font-size: 16px;
+            font-weight: 500;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .success-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 12px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .success-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        @keyframes slideDownSuccess {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
         
         /* Smooth transition when background loads */
         .hero-modern {
