@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Message Test</title>
+</head>
+<body>
+    <h1>Success Message Test Page</h1>
+    <p>If you see a green success message at the top, the JavaScript is working!</p>
+    
+    <script>
+        // Handle success message from FormSubmit redirect
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM loaded, checking URL parameters...");
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            console.log("URL search params:", window.location.search);
+            console.log("Message parameter:", urlParams.get('message'));
+            
+            if (urlParams.get('message') === 'sent') {
+                console.log("Success parameter found! Creating message...");
+                
+                // Create a prominent success message
+                const successDiv = document.createElement('div');
+                successDiv.innerHTML = `
+                    <div style="
+                        background: linear-gradient(135deg, #27ae60, #2ecc71);
+                        color: white;
+                        padding: 20px 30px;
+                        border-radius: 10px;
+                        text-align: center;
+                        margin: 20px;
+                        max-width: 90vw;
+                        width: auto;
+                        min-width: 300px;
+                        box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+                        font-size: 16px;
+                        font-weight: 500;
+                        position: fixed;
+                        top: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        z-index: 1000;
+                        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+                        white-space: nowrap;
+                        overflow: visible;
+                        box-sizing: border-box;
+                    ">
+                        ✅ <strong>Success!</strong> Your message has been sent successfully. We'll get back to you soon!
+                    </div>
+                `;
+                
+                console.log("Inserting success message into DOM...");
+                
+                // Insert at the top of the page
+                document.body.insertBefore(successDiv, document.body.firstChild);
+                
+                console.log("Success message inserted! It should be visible now.");
+                
+                // Auto-hide after 4 seconds
+                setTimeout(() => {
+                    console.log("Auto-hiding success message...");
+                    if (successDiv) {
+                        successDiv.style.opacity = '0';
+                        successDiv.style.transform = 'translateX(-50%) translateY(-20px)';
+                        
+                        // Remove completely after fade out
+                        setTimeout(() => {
+                            if (successDiv.parentNode) {
+                                successDiv.parentNode.removeChild(successDiv);
+                                console.log("Success message removed from DOM");
+                            }
+                        }, 500);
+                    }
+                }, 4000);
+                
+                // Clean up URL after showing the message
+                setTimeout(() => {
+                    const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                    window.history.replaceState({}, document.title, cleanUrl);
+                    console.log("URL cleaned up:", cleanUrl);
+                }, 1000);
+            } else {
+                console.log("No success parameter found. Current URL:", window.location.href);
+            }
+        });
+    </script>
+</body>
+</html>
