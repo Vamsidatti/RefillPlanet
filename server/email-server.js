@@ -8,18 +8,26 @@ require('dotenv').config();
 
 // Email configuration from environment variables
 const EMAIL_CONFIG = {
-    service: process.env.EMAIL_SERVICE || 'gmail',
+    service: process.env.EMAIL_SERVICE || 'zoho',
+    host: process.env.EMAIL_HOST || 'smtp.zoho.com',
+    port: parseInt(process.env.EMAIL_PORT) || 587,
+    secure: process.env.EMAIL_SECURE === 'true' || false, // true for 465, false for other ports
     user: process.env.EMAIL_USER || 'contact@therefillplanet.com',
     pass: process.env.EMAIL_PASS || 'your-app-password',
     to: process.env.EMAIL_TO || 'contact@therefillplanet.com'
 };
 
-// Create email transporter
+// Create reusable transporter object using SMTP transport
 const transporter = nodemailer.createTransport({
-    service: EMAIL_CONFIG.service,
+    host: EMAIL_CONFIG.host,
+    port: EMAIL_CONFIG.port,
+    secure: EMAIL_CONFIG.secure, // true for 465, false for other ports
     auth: {
         user: EMAIL_CONFIG.user,
         pass: EMAIL_CONFIG.pass
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 });
 
@@ -63,7 +71,7 @@ async function sendContactEmail(formData) {
     const mailOptions = {
         from: EMAIL_CONFIG.user,
         to: EMAIL_CONFIG.to,
-        subject: `New Contact Form Message: ${formData.subject}`,
+        subject: `New Message From Contact Form - Name : ${formData.name} : Subject ${formData.subject}`,
         html: `
             <h2>New Contact Form Submission</h2>
             <p><strong>From:</strong> ${formData.name}</p>
@@ -123,8 +131,19 @@ const server = http.createServer(async (req, res) => {
                 // Parse form data
                 const formData = querystring.parse(body);
                 
+                // Map the actual form field names to expected names
+                const emailData = {
+                    name: formData.Name || formData.name,
+                    email: formData.Email || formData.email, 
+                    subject: formData.SingleLine || formData.subject,
+                    message: formData.MultiLine || formData.message
+                };
+                
+                console.log('Received form data:', formData);
+                console.log('Mapped email data:', emailData);
+                
                 // Validate required fields
-                if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                if (!emailData.name || !emailData.email || !emailData.subject || !emailData.message) {
                     res.writeHead(400, { 
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
@@ -137,9 +156,9 @@ const server = http.createServer(async (req, res) => {
                 }
                 
                 // Send email
-                await sendContactEmail(formData);
+                await sendContactEmail(emailData);
                 
-                console.log(`✅ Email sent successfully from ${formData.name} (${formData.email})`);
+                console.log(`✅ Email sent successfully from ${emailData.name} (${emailData.email})`);
                 
                 // Send success response
                 res.writeHead(200, { 
