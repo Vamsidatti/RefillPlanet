@@ -726,86 +726,54 @@
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('message') === 'sent') {
-                // Find the contact form and hide it
-                const contactForm = document.querySelector('#contact form');
-                if (contactForm) {
-                    contactForm.style.display = 'none';
-                }
+                // Create a prominent success message
+                const successDiv = document.createElement('div');
+                successDiv.innerHTML = `
+                    <div style="
+                        background: linear-gradient(135deg, #27ae60, #2ecc71);
+                        color: white;
+                        padding: 20px;
+                        border-radius: 10px;
+                        text-align: center;
+                        margin: 20px auto;
+                        max-width: 600px;
+                        box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+                        font-size: 16px;
+                        font-weight: 500;
+                        position: fixed;
+                        top: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        z-index: 1000;
+                        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+                    ">
+                        ✅ <strong>Success!</strong> Your message has been sent successfully. We'll get back to you soon!
+                    </div>
+                `;
                 
-                // Find the contact section
-                const contactSection = document.getElementById('contact');
-                if (contactSection) {
-                    // Create a comprehensive success message that replaces the form
-                    const successDiv = document.createElement('div');
-                    successDiv.innerHTML = `
-                        <div style="
-                            background: linear-gradient(135deg, #27ae60, #2ecc71);
-                            color: white;
-                            padding: 40px;
-                            border-radius: 15px;
-                            text-align: center;
-                            margin: 30px auto;
-                            box-shadow: 0 15px 40px rgba(39, 174, 96, 0.3);
-                            max-width: 600px;
-                            animation: successPulse 2s ease-in-out;
-                        ">
-                            <div style="font-size: 48px; margin-bottom: 20px;">✅</div>
-                            <h2 style="margin: 0 0 15px 0; font-size: 28px; font-weight: 600;">Message Sent Successfully!</h2>
-                            <p style="margin: 0 0 20px 0; font-size: 18px; line-height: 1.6;">
-                                Thank you for reaching out to RefillPlanet. Your message has been delivered to our team successfully.
-                            </p>
-                            <p style="margin: 0; font-size: 16px; opacity: 0.9;">
-                                We'll get back to you within 24 hours. Keep making a difference! 🌱
-                            </p>
-                        </div>
+                // Insert at the top of the page
+                document.body.insertBefore(successDiv, document.body.firstChild);
+                
+                // Auto-hide after 4 seconds
+                setTimeout(() => {
+                    if (successDiv) {
+                        successDiv.style.opacity = '0';
+                        successDiv.style.transform = 'translateX(-50%) translateY(-20px)';
                         
-                        <style>
-                            @keyframes successPulse {
-                                0% { transform: scale(0.9); opacity: 0; }
-                                50% { transform: scale(1.02); }
-                                100% { transform: scale(1); opacity: 1; }
+                        // Remove completely after fade out
+                        setTimeout(() => {
+                            if (successDiv.parentNode) {
+                                successDiv.parentNode.removeChild(successDiv);
                             }
-                        </style>
-                    `;
-                    
-                    // Insert the success message where the form was
-                    const contactTitle = contactSection.querySelector('h2');
-                    if (contactTitle) {
-                        contactTitle.parentNode.insertBefore(successDiv, contactTitle.nextSibling);
+                        }, 500);
                     }
-                    
-                    // Scroll to the success message and keep focus there
-                    setTimeout(() => {
-                        contactSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
-                    
-                    // Auto-hide success message after 5 seconds
-                    setTimeout(() => {
-                        if (successDiv) {
-                            successDiv.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
-                            successDiv.style.opacity = '0';
-                            successDiv.style.transform = 'translateY(-20px)';
-                            
-                            // Remove the element completely after fade out
-                            setTimeout(() => {
-                                if (successDiv.parentNode) {
-                                    successDiv.parentNode.removeChild(successDiv);
-                                }
-                                
-                                // Show the contact form again
-                                if (contactForm) {
-                                    contactForm.style.display = 'block';
-                                }
-                            }, 500);
-                        }
-                    }, 5000);
-                }
+                }, 4000);
                 
-                // Clean up URL after showing the message (longer delay to let user see it)
+                // Clean up URL after showing the message
                 setTimeout(() => {
                     const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
                     window.history.replaceState({}, document.title, cleanUrl);
-                }, 8000);
+                }, 5000);
             }
         });
     </script>
