@@ -721,6 +721,24 @@
                 setTimeout(scrollToAnchor, 50);
             });
         })();
+
+        // Handle success message from FormSubmit redirect
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('message') === 'sent') {
+                // Show success message
+                const formStatus = document.getElementById('form-status');
+                if (formStatus) {
+                    formStatus.className = 'form-status success';
+                    formStatus.innerHTML = '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
+                    formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                
+                // Clean up URL (remove the parameter)
+                const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                window.history.replaceState({}, document.title, cleanUrl);
+            }
+        })();
     </script>
     
     <style>
