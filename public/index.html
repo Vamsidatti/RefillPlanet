@@ -723,27 +723,46 @@
         })();
 
         // Handle success message from FormSubmit redirect
-        (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking for success message...');
+            console.log('Current URL:', window.location.href);
+            
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('message') === 'sent') {
+            const messageParam = urlParams.get('message');
+            console.log('Message parameter:', messageParam);
+            
+            if (messageParam === 'sent') {
+                console.log('Success message detected!');
+                
                 // Show success message in the contact form area
                 const formStatus = document.getElementById('form-status');
+                console.log('Form status element:', formStatus);
+                
                 if (formStatus) {
+                    // Remove hidden class and add success classes
                     formStatus.className = 'form-status success show';
                     formStatus.innerHTML = '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
+                    console.log('Success message set');
                     
                     // Hide the form after successful submission
                     const contactForm = formStatus.closest('form');
+                    console.log('Contact form:', contactForm);
                     if (contactForm) {
                         contactForm.style.display = 'none';
+                        console.log('Form hidden');
                     }
+                } else {
+                    console.error('Form status element not found!');
                 }
                 
-                // Clean up URL (remove the parameter)
-                const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-                window.history.replaceState({}, document.title, cleanUrl);
+                // Clean up URL (remove the parameter) after a short delay
+                setTimeout(() => {
+                    const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                    window.history.replaceState({}, document.title, cleanUrl);
+                    console.log('URL cleaned');
+                }, 3000);
             }
-        })();
+        });
     </script>
     
     <style>
