@@ -257,6 +257,8 @@ section[id] {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 1100;
     /* animation: slideInUp 0.8s ease 1s both; */
 }
 
@@ -269,6 +271,10 @@ section[id] {
     align-items: center;
     gap: 0.5rem;
     transition: var(--animation-normal);
+    position: relative;
+    z-index: 1150;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .btn-lg:hover {
