@@ -722,6 +722,27 @@
             });
         })();
 
+        // Ensure Start Your Journey button works properly
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle Start Your Journey button specifically
+            const startJourneyBtn = document.querySelector('a[href="#contact"]');
+            if (startJourneyBtn && startJourneyBtn.textContent.includes('Start Your Journey')) {
+                startJourneyBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) {
+                        const offsetTop = contactSection.offsetTop - 30;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                        // Update URL hash
+                        window.history.pushState(null, null, '#contact');
+                    }
+                });
+            }
+        });
+
         // Add form submission feedback
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('.contact-form-modern');
