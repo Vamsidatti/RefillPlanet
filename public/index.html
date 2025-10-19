@@ -14,6 +14,22 @@
     <link rel="stylesheet" href="css/template-modern.css?v=20251021">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .contact-inspiration:hover .inspiration-image {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-inspiration .inspiration-image {
+            transition: transform 0.3s ease;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -64,13 +80,11 @@
                     <span>Leading Sustainable Solutions</span>
                 </div>
                 <h1 class="hero-title">
-                    Building a 
-                    <span class="text-gradient">Sustainable Future</span>
-                    for Our Planet
+                    The future of hydration starts here. 
+                    <span class="text-gradient">Making refilling the new normal</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Join the venues redefining hydration and Reducing single-use plastic. Promote 
-                    Buy the Bottle – Not the Water™ refill culture, inspire change, and protect the planet.
+                    Transforming existing hydration stations into visible, measurable sustainability experiences — effortlessly, at zero cost, and designed to inspire people to use hydration stations instead of buying bottled water.
                 </p>
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -102,7 +116,8 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-image-container">
-                    <!-- Center cards -->
+                    <!-- Center cards hidden -->
+                    <!-- 
                     <div class="floating-card card-5">
                         <i class="fas fa-lightbulb"></i>
                         <span>A Patent-pending methodology, increases refill adoption.</span>
@@ -111,11 +126,12 @@
                         <i class="fa-building"></i>
                         <span>A turnkey sustainability solution for every venue.</span>
                     </div>
+                    -->
                     
                     <!-- Right side cards -->
                     <div class="floating-card card-2">
                         <i class="fas fa-leaf"></i>
-                        <span>Helping venues go green effortlessly.</span>
+                        <span>A Patent-Pending methodology</span>
                     </div>
                     <div class="floating-card card-4">
                         <i class="fas fa-chart-line"></i>
@@ -123,7 +139,7 @@
                     </div>
                     <div class="floating-card card-6">
                         <i class="fas fa-cogs"></i>
-                        <span>Zero Maintenance. 100% Impact.</span>
+                        <span>A turnkey sustainability solution</span>
                     </div>
                     <div class="hero-main-image">
                         <!-- Background image will be set via CSS -->
@@ -162,10 +178,10 @@
                     
                     <div class="ai-feature-item">
                         <div class="ai-feature-content">
-                            <p>Optimize where vending units and hydration stations are installed using AI-driven spatial analysis of visibility, foot traffic, and accessibility.</p>
+                            <p>Optimize where hydration stations are installed using AI-driven spatial analysis of visibility, foot traffic, and accessibility.</p>
                             <ul class="ai-feature-list">
                                 <li>Signage effectiveness scoring</li>
-                                <li>Proximity optimization (vending + refill station pairing)</li>
+                                <li>Proximity optimization</li>
                                 <li>Venue layout adaptation for maximum refill conversion</li>
                             </ul>
                         </div>
@@ -557,6 +573,8 @@
             
             <div class="contact-content-modern">
                 <div class="contact-info-modern">
+                    <!-- Address and phone hidden - no current data available -->
+                    <!-- 
                     <div class="contact-item-modern">
                         <div class="contact-icon">
                             <i class="fas fa-map-marker-alt"></i>
@@ -576,15 +594,87 @@
                             <p>+1 (555) 123-4567</p>
                         </div>
                     </div>
+                    -->
                     
                     <div class="contact-item-modern">
                         <div class="contact-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div class="contact-details">
-                            <h4>Email Us</h4>
+                            <h4>Get In Touch</h4>
                             <p>contact@therefillplanet.com</p>
                         </div>
+                    </div>
+                    
+                    <!-- Inspiring Environmental Image -->
+                    <div class="contact-inspiration" style="
+                        margin-top: 20px;
+                        text-align: center;
+                        padding: 20px;
+                        border-radius: 12px;
+                        background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.1));
+                        border: 1px solid rgba(46, 204, 113, 0.2);
+                    ">
+                        <div class="inspiration-image" style="
+                            width: 100%;
+                            height: 200px;
+                            background: linear-gradient(135deg, #27ae60, #2ecc71);
+                            border-radius: 8px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-bottom: 15px;
+                            position: relative;
+                            overflow: hidden;
+                        ">
+                            <!-- Environmental Icon Composition -->
+                            <div style="
+                                position: relative;
+                                z-index: 2;
+                                color: white;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 15px;
+                                    font-size: 2.5em;
+                                    margin-bottom: 10px;
+                                ">
+                                    <i class="fas fa-leaf" style="animation: float 3s ease-in-out infinite;"></i>
+                                    <i class="fas fa-water" style="animation: float 3s ease-in-out infinite 0.5s;"></i>
+                                    <i class="fas fa-globe-americas" style="animation: float 3s ease-in-out infinite 1s;"></i>
+                                </div>
+                                <h4 style="margin: 0; font-size: 1.2em; font-weight: 600;">
+                                    Together for a Sustainable Future
+                                </h4>
+                            </div>
+                            
+                            <!-- Background Pattern -->
+                            <div style="
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                bottom: 0;
+                                background-image: 
+                                    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 2px, transparent 2px),
+                                    radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 2px, transparent 2px);
+                                background-size: 30px 30px;
+                                opacity: 0.3;
+                            "></div>
+                        </div>
+                        
+                        <p style="
+                            margin: 0;
+                            color: #2c3e50;
+                            font-size: 0.95em;
+                            line-height: 1.5;
+                            font-style: italic;
+                        ">
+                            "We’re building something the world hasn’t seen before — where refilling becomes the new normal. Join us in shaping the future of sustainable hydration."
+                        </p>
                     </div>
                 </div>
                 
